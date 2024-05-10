@@ -2,39 +2,204 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
+
+
 export default function Home() {
   return (
-   <main className="bg-[#1f1f1f] h-screen">
+   <main className="bg-[#1f1f1f] h-[200vh] relative">
 
-    <header className="w-full h-20 flex bg-[#2f2f2f] justify-between items-center pl-10 pr-10">
-      {/* <Image src="/images/logo-website4.jpg" className="w-[100px]" alt="Logo Website" width={60} height={30} /> */}
-      <Link href="/" className="text-[#FFD700] text-2xl font-bold">AE MANGA</Link>
-      <div className="flex items-center">
-        <Input className="bg-white relative pl-16 h-[45px]" placeholder="Search your manga here"/>
-        {/* <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-[153px]" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
-        <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
-        </svg> */}
-        <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B] absolute ml-3" variant="default">Filter</Button>
-
-        <span className="text-[#FFD700] ml-10 font-bold text-base">Member</span>
+    <Header/>
+    {/* Content */}
+    <div className="w-full h-[100vh] mt-10 mb-10">
+      {/* Carousel Banner */}
+      <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-[5rem] mt-[5rem]">
+        <Carousel className="">
+          <CarouselContent>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner1.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner2.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner3.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
-    </header>
-    <div className="flex w-full h-[50vh]">
+        
+      {/* Latest Updates and Trending */}
+      <div className="flex max-w-[1400px] h-[100vh] justify-around ml-auto mr-auto pl-[30px] pr-[30px] lg:pl-[20px] lg:pr-[20px] text-white">       
+          <div className="font-bold lg:text-xl text-sm">
+            <h3 className="p-5">Latest Updates</h3>
+            <div style={{gridTemplateColumns: "repeat(2,400px)",gridAutoRows:"270px"}} className="grid gap-[10px] md:grid-cols-1">
 
+              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
+                <Link href="#" className="w-[140px] absolute mt-2">
+                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
+                </Link>
+                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
+                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
+                  <div className="mb-[10px] font-light">
+                    <Link href="#">Action,</Link>
+                    <Link href="#">Drama,</Link>
+                    <Link href="#">Fantasy</Link>
+                  </div>
+                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
+                    <div className="pt-[10px] pb-[10px] ">
+                      <Link href="#">Chap 86</Link>
+                    </div>              
+                    <div className="pt-[10px] pb-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                    <div className="pt-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
+                <Link href="#" className="w-[140px] absolute mt-2">
+                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
+                </Link>
+                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
+                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
+                  <div className="mb-[10px] font-light">
+                    <Link href="#">Action,</Link>
+                    <Link href="#">Drama,</Link>
+                    <Link href="#">Fantasy</Link>
+                  </div>
+                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
+                    <div className="pt-[10px] pb-[10px] ">
+                      <Link href="#">Chap 86</Link>
+                    </div>              
+                    <div className="pt-[10px] pb-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                    <div className="pt-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
+                <Link href="#" className="w-[140px] absolute mt-2">
+                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
+                </Link>
+                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
+                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
+                  <div className="mb-[10px] font-light">
+                    <Link href="#">Action,</Link>
+                    <Link href="#">Drama,</Link>
+                    <Link href="#">Fantasy</Link>
+                  </div>
+                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
+                    <div className="pt-[10px] pb-[10px] ">
+                      <Link href="#">Chap 86</Link>
+                    </div>              
+                    <div className="pt-[10px] pb-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                    <div className="pt-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
+                <Link href="#" className="w-[140px] absolute mt-2">
+                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
+                </Link>
+                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
+                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
+                  <div className="mb-[10px] font-light">
+                    <Link href="#">Action,</Link>
+                    <Link href="#">Drama,</Link>
+                    <Link href="#">Fantasy</Link>
+                  </div>
+                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
+                    <div className="pt-[10px] pb-[10px] ">
+                      <Link href="#">Chap 86</Link>
+                    </div>              
+                    <div className="pt-[10px] pb-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                    <div className="pt-[10px]">
+                      <Link href="#">Chap 86</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div style={{width: "calc(33.33% - 20px)"}} className="float-right">
+            <div className="w-full h-[50vh] font-bold lg:text-xl text-sm">
+              <h3 className="p-5">Most Viewed</h3>
+              <div className="lg:text-lg font-light ml-4 mb-[20px]">
+                <ul className="flex justify-between bg-[#2f2f2f] text-center">
+                  <li className="basis-[7.75rem] p-3 bg-[#FFD700] text-[#000000] hover:text-opacity-50"><Link href="#">Today</Link></li>
+                  <li className="basis-[7.75rem] p-3 hover:text-[#FFD700]"><Link href="#">Week</Link></li>
+                  <li className="basis-[7.75rem] p-3 hover:text-[#FFD700]"><Link href="#">Month</Link></li>
+                </ul>
+              </div>
+              <div className="ml-4 text-lg">
+                <ul className="p-0 m-0 list-none">                 
+                  <li className="relative mb-[25px]">
+                    <div className="float-right p-3 lg:w-[47px] bg-[#2f2f2f] text-[#FFD700]"><span>01</span></div>
+                    <Link className="block w-[60px] " href="#"><Image src="/images/DemoCover.png" alt="Manga Cover" width={100} height={0} objectFit="contain"/></Link>
+                    <div className="absolute top-0 left-[4.8rem]">
+                      <h3 className="max-w-max font-[600] mb-[5px]">Manga Title</h3>
+                      <div className="text-base font-light block min-w-max text-[0.9rem]">
+                        <span className="">
+                          <Link href="#">Action, </Link>
+                          <Link href="#">Demons</Link>
+                        </span>
+                       
+                        <div className="">
+                          <span className="text-[#FFD700]"><Link href="#">Chap 258</Link></span>
+                        </div>
+                      </div>
+                    </div>
+                    <span className="absolute right-0 bottom-0 text-[0.83rem] leading-[20px] h-[20px] pl-[6px] pr-[6px] text-[#aaa] font-light border rounded-[4px] border-[#2f2f2f]">4000 views</span>
+                  </li>
+                  <li className="relative mb-[30px]">
+                    <div className="float-right lg:w-[47px] p-3 bg-[#2f2f2f] text-[#FFD700]"><span>02</span></div>
+                    <Link className="block w-[60px] " href="#"><Image src="/images/DemoCover.png" alt="Manga Cover" width={100} height={0} objectFit="contain"/></Link>
+                    <div className="absolute top-0 left-[4.8rem]">
+                      <h3 className="max-w-max font-[600] mb-[5px]">Manga Title</h3>
+                      <div className="text-base font-light block min-w-max text-[0.9rem]">
+                        <span className="">
+                          <Link href="#">Action, </Link>
+                          <Link href="#">Demons</Link>
+                        </span>
+                       
+                        <div className="">
+                          <span className="text-[#FFD700]"><Link href="#">Chap 258</Link></span>
+                        </div>
+                      </div>
+                    </div>
+                    <span className="absolute right-0 bottom-0 text-[0.83rem] leading-[20px] h-[20px] pl-[6px] pr-[6px] text-[#aaa] font-light border rounded-[4px] border-[#2f2f2f]">4000 views</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
-    <footer className="w-full h-max text-center text-[#D3D3D3]">
-      <Link href="/" className="text-[#FFD700] text-2xl font-bold mb-3">AE MANGA</Link>
-      <ul className=" flex justify-center items-center mb-3">
-        <li className="my-[10px] mx-[20px] w-max">Terms of service</li>
-        <li className="my-[10px] mx-[20px] w-max">DMCA</li>
-        <li className="my-[10px] mx-[20px] w-max">Contact</li>
-        <li className="my-[10px] mx-[20px] w-max">About us</li>
-      </ul>
-      <div className="opacity-60 mb-3">
-        AE Manga does not store any files on our server, we only linked to the media which is hosted on 3rd party services
-      </div>
-      <p className="opacity-60 mb-3">&copy; aemanga.com</p>
-    </footer>
+
+    <Footer/>
    </main>
   );
 }
+
