@@ -41,7 +41,7 @@ export default function Home() {
             <div style={{gridTemplateColumns: "repeat(2,400px)",gridAutoRows:"270px"}} className="grid gap-[10px] md:grid-cols-1">
 
               <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
-                <Link href="#" className="w-[140px] absolute mt-2">
+                <Link href="/detailpage" className="w-[140px] absolute mt-2">
                   <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
                 </Link>
                 <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
