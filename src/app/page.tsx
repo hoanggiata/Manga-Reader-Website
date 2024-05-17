@@ -12,15 +12,17 @@ import {
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-
-
-export default function Home() {
+import { Item } from "@radix-ui/react-dropdown-menu";
+import {fetchManga,fetchMostViewed,slideTitle} from "@/utils/utils";
+export default async function Home() {
+  const {mangas,allChapters,coverArts} = await fetchManga();
+  const {mangaMostView,coverArtsMostView,allChaptersMostView} = await fetchMostViewed();
   return (
-   <main className="bg-[#1f1f1f] h-[200vh] relative">
+   <main className="bg-[#1f1f1f] h-[250vh] relative">
 
     <Header/>
     {/* Content */}
-    <div className="w-full h-[100vh] mt-10 mb-10">
+    <div className="w-full mt-10 mb-10">
       {/* Carousel Banner */}
       <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-[5rem] mt-[5rem]">
         <Carousel className="">
@@ -35,145 +37,93 @@ export default function Home() {
       </div>
         
       {/* Latest Updates and Trending */}
-      <div className="flex max-w-[1400px] h-[100vh] justify-around ml-auto mr-auto pl-[30px] pr-[30px] lg:pl-[20px] lg:pr-[20px] text-white">       
-          <div className="font-bold lg:text-xl text-sm">
+      <div className="flex max-w-[1400px] justify-around ml-auto mr-auto pl-[30px] pr-[30px] lg:pl-[20px] lg:pr-[20px] text-white">       
+          <div className="font-bold lg:text-xl text-sm lg:w-[58%]">
             <h3 className="p-5">Latest Updates</h3>
-            <div style={{gridTemplateColumns: "repeat(2,400px)",gridAutoRows:"270px"}} className="grid gap-[10px] md:grid-cols-1">
-
-              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
-                <Link href="#" className="w-[140px] absolute mt-2">
-                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
-                </Link>
-                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
-                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
-                  <div className="mb-[10px] font-light">
-                    <Link href="#">Action,</Link>
-                    <Link href="#">Drama,</Link>
-                    <Link href="#">Fantasy</Link>
-                  </div>
-                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
-                    <div className="pt-[10px] pb-[10px] ">
-                      <Link href="#">Chap 86</Link>
-                    </div>              
-                    <div className="pt-[10px] pb-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                    <div className="pt-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-
-              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
-                <Link href="#" className="w-[140px] absolute mt-2">
-                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
-                </Link>
-                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
-                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
-                  <div className="mb-[10px] font-light">
-                    <Link href="#">Action,</Link>
-                    <Link href="#">Drama,</Link>
-                    <Link href="#">Fantasy</Link>
-                  </div>
-                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
-                    <div className="pt-[10px] pb-[10px] ">
-                      <Link href="#">Chap 86</Link>
-                    </div>              
-                    <div className="pt-[10px] pb-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                    <div className="pt-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
-                <Link href="#" className="w-[140px] absolute mt-2">
-                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
-                </Link>
-                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
-                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
-                  <div className="mb-[10px] font-light">
-                    <Link href="#">Action,</Link>
-                    <Link href="#">Drama,</Link>
-                    <Link href="#">Fantasy</Link>
-                  </div>
-                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
-                    <div className="pt-[10px] pb-[10px] ">
-                      <Link href="#">Chap 86</Link>
-                    </div>              
-                    <div className="pt-[10px] pb-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                    <div className="pt-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative p-4 lg:m-3  lg:bg-[#2f2f2f] border-0 rounded-lg ">
-                <Link href="#" className="w-[140px] absolute mt-2">
-                  <Image className="w-full h-full" src="/images/DemoCover.png" width={500} height={0} objectFit="contain" alt="Manga Cover"/>
-                </Link>
-                <div className="w-[50%] relative lg:text-sm float-right min-h-[200px] mt-2 ">
-                  <h3 className="mb-[10px] text-xl">This is Manga Title</h3>
-                  <div className="mb-[10px] font-light">
-                    <Link href="#">Action,</Link>
-                    <Link href="#">Drama,</Link>
-                    <Link href="#">Fantasy</Link>
-                  </div>
-                  <div className="block absolute bottom-0 left-0 right-0 text-[#FFD700]">
-                    <div className="pt-[10px] pb-[10px] ">
-                      <Link href="#">Chap 86</Link>
-                    </div>              
-                    <div className="pt-[10px] pb-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                    <div className="pt-[10px]">
-                      <Link href="#">Chap 86</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            <div className="grid gap-3 grid-cols-1 lg:grid-cols-2 w-full">
+              {mangas.map((manga,index) => {
+                return (
+                <div key={manga.id} className="w-full md:w-[100%] lg:w-full rounded-[0.75rem] bg-[#2f2f2f] p-4 ml-[7px] mr-[7px] mb-[20px] relative">
+                {coverArts[index].map(cover => {
+                  return (
+                  <Link key={manga.id} href="#" className="absolute top-4 left-4 lg:w-[140px] h-[200px]">
+                    <Image className="w-full h-full" src={cover} width={0} height={0} alt="Manga Cover" unoptimized></Image>
+                  </Link>
+                  );
+                })}            
+                {/* Manga Detail */}
+                <div style={{width: "calc(100% - 160px)"}} className="float-right min-h-[200px] relative">
+                     <h3 className="text-[17px] font-semibold mb-[10px]">{slideTitle(manga,true)}</h3>
+                     {/* Manga Category */}
+                     <div className="block mb-[20px] text-[13px]">
+                         <span>
+                          {manga.attributes.tags.slice(0,3).map((tag) => (
+                            <Link key={tag.id} href="#">{tag.attributes.name.en}, </Link>
+                          ))}
+                             {/* <Link href="#">Action, </Link>
+                             <Link href="#">Drama, </Link>
+                             <Link href="#">Fantasy</Link> */}
+                         </span>
+                     </div>
+                     {/* Manga Chaper List */}
+                     <div className="absolute left-0 right-0 bottom-0 pr-[10px] font-medium text-[13.6px] text-[#FFD700]">
+                      { allChapters[index] ? allChapters[index].map((item) => (
+                        item ? (
+                        <div key={item.id} className="pt-[10px] border-b border-dashed border-gray-600">
+                          <Link href="#">Chap {item.chapter}</Link>
+                        </div>
+                        ) : null
+                      )) : <p>Loading Chapters</p>
+                      }                  
+                         {/* <div className="pt-[10px] border-b border-dashed border-gray-600">
+                             <Link href="#">Chap 32</Link>
+                         </div>
+                         <div className="pt-[10px] ">
+                             <Link href="#">Chap 31</Link>
+                         </div> */}
+                     </div>
+                </div>            
+            </div>
+                ); 
+              })}                                
             </div>
           </div>
-          <div style={{width: "calc(33.33% - 20px)"}} className="float-right">
+          <div style={{width: "calc(33.33% - 20px)"}} className="lg:float-right">
             <div className="w-full h-[50vh] font-bold lg:text-xl text-sm">
               <h3 className="p-5">Most Viewed</h3>
-              <div className="lg:text-lg font-light ml-4 mb-[20px]">
-                <ul className="flex justify-between bg-[#2f2f2f] text-center">
-                  <li className="basis-[7.75rem] p-3 bg-[#FFD700] text-[#000000] hover:text-opacity-50"><Link href="#">Today</Link></li>
-                  <li className="basis-[7.75rem] p-3 hover:text-[#FFD700]"><Link href="#">Week</Link></li>
-                  <li className="basis-[7.75rem] p-3 hover:text-[#FFD700]"><Link href="#">Month</Link></li>
-                </ul>
-              </div>
               <div className="ml-4 text-lg">
-                <ul className="p-0 m-0 list-none">                 
-                  <li className="relative mb-[25px]">
-                    <div className="float-right p-3 lg:w-[47px] bg-[#2f2f2f] text-[#FFD700]"><span>01</span></div>
-                    <Link className="block w-[60px] " href="#"><Image src="/images/DemoCover.png" alt="Manga Cover" width={100} height={0} objectFit="contain"/></Link>
+                <ul className="p-0 m-0 list-none">
+                  {mangaMostView.data.map((manga,index) => (
+                    <li key={manga.id} className="relative mb-[25px]">
+                    <div className={`float-right relative top-4 p-3 lg:w-[47px] bg-[#2f2f2f] ${index <3 ? `text-[#FFD700]` : `text-white` } `}><span>{index === 9 ? "10": `0${index + 1}`}</span></div>
+                    {coverArtsMostView[index].map(cover => {
+                      return (
+                        <Link key={manga.id} className="block w-[60px] " href="#"><Image src={cover} alt="Manga Cover" width={100} height={0}/></Link>
+                      )
+                    })}            
                     <div className="absolute top-0 left-[4.8rem]">
-                      <h3 className="max-w-max font-[600] mb-[5px]">Manga Title</h3>
+                      <h3 className="max-w-max font-[600] mb-[5px]">{slideTitle(manga,true)}</h3>
                       <div className="text-base font-light block min-w-max text-[0.9rem]">
                         <span className="">
-                          <Link href="#">Action, </Link>
-                          <Link href="#">Demons</Link>
+                          {manga.attributes.tags.slice(0,2).map((tag) => (
+                            <Link key={tag.id} href="#">{tag.attributes.name.en}, </Link>
+                          ))}
                         </span>
                        
-                        <div className="">
-                          <span className="text-[#FFD700]"><Link href="#">Chap 258</Link></span>
+                        <div className="mt-2">
+                          {
+                            allChaptersMostView[index] ? (
+                              <span key={allChaptersMostView[index][0].id} className="text-[#FFD700]"><Link href="#">Chap {allChaptersMostView[index][0].chapter}</Link></span>
+                            ) : <p>Loading Chapters</p>
+                          }
+                          
                         </div>
                       </div>
-                    </div>
-                    <span className="absolute right-0 bottom-0 text-[0.83rem] leading-[20px] h-[20px] pl-[6px] pr-[6px] text-[#aaa] font-light border rounded-[4px] border-[#2f2f2f]">4000 views</span>
+                    </div>                 
                   </li>
-                  <li className="relative mb-[30px]">
+                  ))}                 
+                  
+                  {/* <li className="relative mb-[30px]">
                     <div className="float-right lg:w-[47px] p-3 bg-[#2f2f2f] text-[#FFD700]"><span>02</span></div>
                     <Link className="block w-[60px] " href="#"><Image src="/images/DemoCover.png" alt="Manga Cover" width={100} height={0} objectFit="contain"/></Link>
                     <div className="absolute top-0 left-[4.8rem]">
@@ -190,7 +140,7 @@ export default function Home() {
                       </div>
                     </div>
                     <span className="absolute right-0 bottom-0 text-[0.83rem] leading-[20px] h-[20px] pl-[6px] pr-[6px] text-[#aaa] font-light border rounded-[4px] border-[#2f2f2f]">4000 views</span>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
