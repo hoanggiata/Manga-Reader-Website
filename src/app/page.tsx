@@ -60,9 +60,6 @@ export default async function Home() {
                           {manga.attributes.tags.slice(0,3).map((tag) => (
                             <Link key={tag.id} href="#">{tag.attributes.name.en}, </Link>
                           ))}
-                             {/* <Link href="#">Action, </Link>
-                             <Link href="#">Drama, </Link>
-                             <Link href="#">Fantasy</Link> */}
                          </span>
                      </div>
                      {/* Manga Chaper List */}
@@ -75,12 +72,6 @@ export default async function Home() {
                         ) : null
                       )) : <p>Loading Chapters</p>
                       }                  
-                         {/* <div className="pt-[10px] border-b border-dashed border-gray-600">
-                             <Link href="#">Chap 32</Link>
-                         </div>
-                         <div className="pt-[10px] ">
-                             <Link href="#">Chap 31</Link>
-                         </div> */}
                      </div>
                 </div>            
             </div>
@@ -122,25 +113,6 @@ export default async function Home() {
                     </div>                 
                   </li>
                   ))}                 
-                  
-                  {/* <li className="relative mb-[30px]">
-                    <div className="float-right lg:w-[47px] p-3 bg-[#2f2f2f] text-[#FFD700]"><span>02</span></div>
-                    <Link className="block w-[60px] " href="#"><Image src="/images/DemoCover.png" alt="Manga Cover" width={100} height={0} objectFit="contain"/></Link>
-                    <div className="absolute top-0 left-[4.8rem]">
-                      <h3 className="max-w-max font-[600] mb-[5px]">Manga Title</h3>
-                      <div className="text-base font-light block min-w-max text-[0.9rem]">
-                        <span className="">
-                          <Link href="#">Action, </Link>
-                          <Link href="#">Demons</Link>
-                        </span>
-                       
-                        <div className="">
-                          <span className="text-[#FFD700]"><Link href="#">Chap 258</Link></span>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="absolute right-0 bottom-0 text-[0.83rem] leading-[20px] h-[20px] pl-[6px] pr-[6px] text-[#aaa] font-light border rounded-[4px] border-[#2f2f2f]">4000 views</span>
-                  </li> */}
                 </ul>
               </div>
             </div>
