@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 export default function DetailPage() {
     return (
-        <main className="bg-[#1f1f1f] h-[250vh] relative">
+        <main className="bg-[#1f1f1f] min-h-screen overflow-hidden">
             <Header/>
             {/* chi tiết card Manga */}
             <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-[70vh]">
