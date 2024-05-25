@@ -6,15 +6,15 @@ import Image from "next/image";
 import Link from "next/link";
 export default function DetailPage() {
     return (
-        <main className="bg-[#1f1f1f] min-h-screen overflow-hidden">
+        <main className="flex flex-col bg-[#1f1f1f] min-h-screen overflow-hidden flex-grow">
             <Header/>
             {/* chi tiết card Manga */}
-            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-[70vh]">
+            <div className="flex-1 container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-auto lg:h-[70vh] mt-10 mb-10">
                 <div className="w-full lg:w-1/2 flex items-start justify-between py-10 lg:py-0">
-                    <Image className="w-[40%] min-w-[300px] rounded-lg object-cover" src="/images/DemoCover.png" alt="Manga Title" width={200} height={300} objectFit="cover"/>
-                    <div className="flex flex-col items-start ml-10">
-                        <h1 className="text-3xl font-bold text-white mt-5">This is Manga Title</h1>
-                        <p className="text-white text-lg mt-5 text-justify lg:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id justo et lectus tincidunt porttitor. Nullam et dui sed nunc ultrices efficitur. Sed sit amet lacus ut mi malesuada eleifend.</p>
+                    <Image className="w-[40%] min-w-[175px] lg:min-w-[300px] rounded-lg object-cover" src="/images/DemoCover.png" alt="Manga Title" width={200} height={300} objectFit="cover"/>
+                    <div className="flex flex-col items-start ml-5 lg:ml-10">
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white mt-5">This is Manga Title</h1>
+                        <p className="text-white text-base lg:text-lg mt-5 text-justify lg:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id justo et lectus tincidunt porttitor. Nullam et dui sed nunc ultrices efficitur. Sed sit amet lacus ut mi malesuada eleifend.</p>
                         <div className="text-white text-base font-light mt-3">
                             <div className="mb-[10px] font-light flex flex-wrap gap-2">
                                 <Link href="#" className="px-3 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-800">Action </Link>
@@ -64,7 +64,7 @@ export default function DetailPage() {
             </div>
 
             {/* List of chapters */}
-            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-10">
+            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-auto lg:h-10">
                 <div className="container mx-auto w-full lg:w-1/2 overflow-auto px-4 pt-10 lg:pt-0 pb-10 flex flex-wrap h-[40vh]">
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl text-white font-bold mr-10 mb-5 lg:w-1/2">List of Chapters</h2>
