@@ -6,10 +6,10 @@ import { Breadcrumb,
          BreadcrumbList,
          BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
-
+import Image from "next/image";
 export default function DetailChapter() {
     return (
-        <main className="bg-[#1f1f1f] min-h-screen flex-grow">
+        <main className="bg-[#1f1f1f] h-[300vh] flex-grow relative">
             <Header/>
             <div className="container mx-auto px-4 pt-16 rounded bg-[#242526]">
                 <div className="mb-[25px]">
@@ -64,11 +64,14 @@ export default function DetailChapter() {
                 </div>
             </div>
             {/* nội dung truyện */}
-            <div className="container px-4 py-8 border border-[#2f2f2f] rounded mt-4">
-                <p className="text-white text-bold">
-                    Đây là nơi thêm API các truyện tranh 
-                </p>
+            <div className="container px-4 py-8 rounded mt-4 flex justify-center">
+                <div className="w-full px-5">
+                    <div className="min-h-52 mb-5 w-full flex justify-center">
+                        <Image className="" src="/images/ImageChapterDemo.png" alt="Manga Title" sizes="100vw" width={0} height={0} style={{ width: '80%', height: 'auto' }}/>
+                    </div>
+                </div>
             </div>
+
             <div className="mt-4 flex flex-wrap justify-center">
                 <div className="flex items-center">
                     <button className="bg-[#2f2f2f] text-white px-4 py-2 rounded mr-4 mb-5 hover:bg-[#FFD700]">Chap trước</button>

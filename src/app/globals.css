@@ -1,6 +1,6 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
   @layer base {
     :root {
@@ -74,3 +74,49 @@
       @apply bg-background text-foreground;
     }
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: black;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #A9A9A9;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FFD700;
+}
+
+/* hide arrow from input number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.highlight
+{
+    background-color: #3f3f3f;
+    border: 1px solid #FFD700;
+}
+.highlight-text
+{
+  color: #FFD700;
+}
+.highlight-text:hover
+{
+  opacity: 0.75;
+}
+

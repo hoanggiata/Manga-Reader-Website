@@ -25,11 +25,14 @@ export default async function Home() {
     <div className="w-full mt-10 mb-10">
       {/* Carousel Banner */}
       <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-[5rem] mt-[5rem]">
-        <Carousel className="">
+        <Carousel opts={{
+          align: "start",
+          loop: true,
+        }}>
           <CarouselContent>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner1.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner2.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner3.jpg" width={1100} height={450} objectFit="contain" alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner1.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner2.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner3.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
@@ -53,12 +56,12 @@ export default async function Home() {
                 })}            
                 {/* Manga Detail */}
                 <div style={{width: "calc(100% - 160px)"}} className="float-right min-h-[200px] relative">
-                     <h3 className="text-[17px] font-semibold mb-[10px]">{slideTitle(manga,true)}</h3>
+                     <Link href={`/detailpage/${manga.id}`} className="text-[17px] font-semibold mb-[10px] hover:text-[#FFD700]">{slideTitle(manga,true)}</Link>
                      {/* Manga Category */}
                      <div className="block mb-[20px] text-[13px]">
                          <span>
                           {manga.attributes.tags.slice(0,3).map((tag) => (
-                            <Link key={tag.id} href="#">{tag.attributes.name.en}, </Link>
+                            <Link className="text-gray-400 text-sm font-light hover:text-[#FFD700]" key={tag.id} href="#">{tag.attributes.name.en}, </Link>
                           ))}
                          </span>
                      </div>
@@ -93,11 +96,11 @@ export default async function Home() {
                       )
                     })}            
                     <div className="absolute top-0 left-[4.8rem]">
-                      <h3 className="max-w-max font-[600] mb-[5px]">{slideTitle(manga,true)}</h3>
-                      <div className="text-base font-light block min-w-max text-[0.9rem]">
+                      <Link href={`/detailpage/${manga.id}`} className="block mb-2 font-[600] hover:text-[#FFD700]">{slideTitle(manga,true)}</Link>
+                      <div className="text-gray-400 text-sm font-light block min-w-max text-[0.9rem] ">
                         <span className="">
                           {manga.attributes.tags.slice(0,2).map((tag) => (
-                            <Link key={tag.id} href="#">{tag.attributes.name.en}, </Link>
+                            <Link className="hover:text-[#FFD700]" key={tag.id} href="#">{tag.attributes.name.en}, </Link>
                           ))}
                         </span>
                        
@@ -106,8 +109,7 @@ export default async function Home() {
                             allChaptersMostView[index] ? (
                               <span key={allChaptersMostView[index][0].id} className="text-[#FFD700]"><Link href="#">Chap {allChaptersMostView[index][0].chapter}</Link></span>
                             ) : <p>Loading Chapters</p>
-                          }
-                          
+                          }                         
                         </div>
                       </div>
                     </div>                 
