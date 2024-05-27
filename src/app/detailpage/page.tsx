@@ -9,7 +9,7 @@ export default function DetailPage() {
         <main className="flex flex-col bg-[#1f1f1f] min-h-screen overflow-hidden flex-grow">
             <Header/>
             {/* chi tiết card Manga */}
-            <div className="flex-1 container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-auto lg:h-[70vh] mt-10 mb-10">
+            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full h-auto lg:h-[70vh] mt-10 mb-10">
                 <div className="w-full lg:w-1/2 flex items-start justify-between py-10 lg:py-0">
                     <Image className="w-[40%] min-w-[175px] lg:min-w-[300px] rounded-lg object-cover" src="/images/DemoCover.png" alt="Manga Title" width={200} height={300} objectFit="cover"/>
                     <div className="flex flex-col items-start ml-5 lg:ml-10">
