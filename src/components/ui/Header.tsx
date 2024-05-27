@@ -13,7 +13,6 @@ export default function Header()
 
   return(
     <header className="w-full h-20 flex bg-[#2f2f2f] justify-between items-center px-4 lg:px-10 mb-[25px] relative">
-      {/* <Image src="/images/logo-website4.jpg" className="w-[100px]" alt="Logo Website" width={60} height={30} /> */}
       <div className="flex items-center">
         <button onClick={toggleMenu} className="lg:hidden text-white focus:outline-none">
           <svg className="w-6 h-6 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -50,7 +49,7 @@ export default function Header()
           </button>
         </div>
       </div>  
-
+      <div></div>
       {isMenuOpen && (       
         <nav className="lg:hidden absolute top-full left-0 w-full bg-[#2f2f2f] z-50 py-4 overflow-hidden transition-all duration-300 ease-in-out">
           <div className="flex flex-col items-center space-y-4">
