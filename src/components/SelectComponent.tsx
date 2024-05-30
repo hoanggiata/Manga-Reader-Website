@@ -28,15 +28,15 @@ export default function SelectComponent({allChapter,mangaId,chapterId}){
     }
     return (
         <>
-            <Link href={`/detailchapter/${mangaId}/${prevValue}`} className="bg-[#2f2f2f] text-white px-4 py-2 rounded mr-4 mb-5 hover:bg-[#FFD700] hover:text-[#000000]">Previous Chapter</Link>
-            <select className="select-chapter bg-[#2f2f2f] text-white px-20 py-2 rounded mr-4 mb-5" onChange={handleOnChange}>
+            <Link href={`/detailchapter/${mangaId}/${prevValue}`} className="bg-[#2f2f2f] text-white px-3 py-1 rounded w-full sm:w-auto hover:bg-[#FFD700] mr-2 ml-2">Previous Chapter</Link>
+            <select className="select-chapter bg-[#2f2f2f] text-white px-4 py-2 rounded w-full sm:w-auto mr-2" onChange={handleOnChange}>
                 {allChapter.map((chapterObject) => (
                     chapterObject.chapterArray.map((chapter) => (
                         <option value={chapter.id} key={chapter.id} selected={chapterId === chapter.id}>Volume {chapterObject.volume} - Chapter {chapter.chapter}</option>
                     ))
                 ))}
             </select>
-            <Link href={`/detailchapter/${mangaId}/${nextValue}`} className="bg-[#2f2f2f] text-white px-4 py-2 rounded mb-5 hover:bg-[#FFD700] hover:text-[#000000]">Next Chapter</Link>
+            <Link href={`/detailchapter/${mangaId}/${nextValue}`} className="bg-[#2f2f2f] text-white px-3 py-1 rounded w-full sm:w-auto hover:bg-[#FFD700] mr-2">Next Chapter</Link>
         </>
     );
 }

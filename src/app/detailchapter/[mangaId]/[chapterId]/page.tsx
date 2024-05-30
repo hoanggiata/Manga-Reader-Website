@@ -30,11 +30,11 @@ export const generateMetadata = async ({params} : Props): Promise<Metadata> =>{
 export default async function DetailChapter({params} : any) {
     const {manga,allChapters} = await fetchMangaWithID(params.mangaId);
     return (
-        <main className="bg-[#1f1f1f] flex-grow relative">
+        <main className="bg-[#1f1f1f] h-min-screen flex flex-col overflow-hidden">
             <Header/>
-            <div className="container mx-auto px-4 pt-16 rounded bg-[#242526]">
-                <div className="mb-[25px]">
-                    <Breadcrumb className="">
+            <div className="container mx-auto px-4 pt-16 bg-[#242526]">
+                <div className="mb-6">
+                    <Breadcrumb className="flex flex-wrap">
                         <BreadcrumbList>
                             <BreadcrumbItem className="text-white">
                             <BreadcrumbLink className="hover:text-[#FFD700]" href="/">Home</BreadcrumbLink>
@@ -49,12 +49,12 @@ export default async function DetailChapter({params} : any) {
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
-                    <div className="container mx-auto px-4 pt-16">
-                        <div className="flex items-center justify-center">
+                    <div className="mt-4">
+                        <div className="flex flex-wrap items-center">
                             <h1 className="text-2xl font-bold text-white">
                                 {slideTitle(manga,false)}
                             </h1>
-                            <p className= "text-white ml-4">cập nhật vào lúc 12:00</p>
+                            <p className= "text-white ml-2">cập nhật vào lúc 12:00</p>
                         </div>
                     </div>
                     <div className="mt-4 flex flex-wrap justify-center">
@@ -67,7 +67,7 @@ export default async function DetailChapter({params} : any) {
                             <button className="bg-[#F0AD4E] text-black px-4 py-2 rounded mr-2">Báo Lỗi Chương</button>
                         </div>
                     </div> */}
-                    <div className="mt-4 flex flex-wrap justify-center">
+                    <div className="mt-4 flex flex-wrap justify-center space-y-2 sm:space-y-0 sm:space-x-2">
                         <div className="flex items-center">                          
                             <SelectComponent allChapter={allChapters} mangaId={params.mangaId} chapterId={params.chapterId}/>                         
                         </div>
@@ -75,15 +75,15 @@ export default async function DetailChapter({params} : any) {
                 </div>
             </div>
             {/* nội dung truyện */}
-            <div className="container px-4 py-8 rounded mt-4 flex justify-center">
-                <div className="w-full px-5">
+            <div className="container mx-auto px-4 py-8 rounded mt-4 flex justify-center">
+                <div className="w-full lg:w-3/4 xl:w-2/3 px-5">
                     <Suspense fallback={<Loading/>}>
                         <ImageChapter chapterID={params.chapterId}/> 
                     </Suspense>                                 
                 </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap justify-center mb-36">
+            <div className="mt-4 flex flex-wrap justify-center mb-36 space-y-2 sm:space-y-0 sm:space-x-2">
                 <div className="flex items-center">
                     <SelectComponent allChapter={allChapters} mangaId={params.mangaId} chapterId={params.chapterId}/>
                 </div>

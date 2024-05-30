@@ -62,9 +62,10 @@ export default function SearchPopUp()
     
     return (
         <>  
-            <Input className="hidden lg:block bg-white relative pl-16 pr-16 h-[45px]" placeholder="Search your manga here" onChange={handleOnChange} value={value}/>
-            <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] overflow-hidden hover:bg-[#FFEC8B] absolute ml-3" variant="default"><Link href="/filter" prefetch={true}>Filter</Link></Button>
-            
+            <div className="relative w-full flex items-center">
+                <Input className="hidden lg:block bg-white relative pl-16 pr-16 h-[45px]" placeholder="Search your manga here" onChange={handleOnChange} value={value}/>
+                <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] overflow-hidden hover:bg-[#FFEC8B] absolute ml-3" variant="default"><Link href="/filter" prefetch={true}>Filter</Link></Button>
+            </div>
             <div className="absolute left-0 top-11 right-0 overflow-hidden z-10 border rounded-lg bg-[#2f2f2f] border-transparent w-[100%] hidden search-pop-up">                 
                     {mangas.map((manga, index) => (
                         <Link key={manga.id} href={`/detailpage/${manga.id}`} className=" px-3 py-3 w-full flex">

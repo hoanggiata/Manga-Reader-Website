@@ -27,13 +27,13 @@ export default async function DetailPage({params} : any) {
     const {manga,allChapters,coverArt} = await fetchMangaWithID(params.mangaId);
     const {mangaRelated,coverArts,LatestChapter} = await fetchRelatedMangaWithTags(manga.attributes.tags,params.mangaId);
     return (
-        <main className="bg-[#1f1f1f] relative">
+        <main className="bg-[#1f1f1f] min-h-screen overflow-hidden">
             <Header/>
             {/* chi tiết card Manga */}
             <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full mb-10">
-                <div className="w-full lg:w-1/2 flex items-start justify-between py-10 lg:py-0">
-                    <Image className="lg:min-w-[240px] lg:min-h-[340px] rounded-lg object-cover" src={coverArt} alt="Manga Title" width={200} height={300}/>
-                    <div className="flex flex-col ml-10 h-[340px]">
+                <div className="flex flex-col items-center p-4 rounded-lg w-full max-w-md">
+                    <Image className="flex items-center rounded-lg object-cover" src={coverArt} alt="Manga Title" width={200} height={300}/>
+                    <div className="flex flex-col ml-2 lg:ml-10 h-auto lg:h-[340px]">
                         <h1 className="text-2xl font-bold text-white mt-5">{slideTitle(manga,false)}</h1>
                         <p className="text-white text-sm mt-5 text-justify lg:text-left">{slideDescription(manga.attributes.description.en)}</p>
                         <div className="text-white text-sm font-light mt-3">
