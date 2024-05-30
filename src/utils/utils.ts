@@ -1,12 +1,12 @@
 
 async function fetchLatestChapterManga(id)
 {
-  const res = await fetch(`https://api.mangadex.org/manga/${id}/aggregate`);
+  const res = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
   const result = await res.json();
   const volumes = Object.values(result.volumes);
-  const latestVolume = volumes[volumes.length - 1];
+  if(volumes.length === 0) return null;
+  const latestVolume = await volumes[volumes.length - 1];
   const chapters = Object.entries(latestVolume.chapters);
-
   // Sort chapters by the order they were added (assuming they're added in order)
   chapters.sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]));
 
@@ -36,27 +36,25 @@ async function fetchCoverMangas(id)
   let coverArt = [];
   for(let i = 0; i < fileName.length; i++)
   {
-    let respond = await fetch(`https://uploads.mangadex.org/covers/${id}/${fileName}.256.jpg`);
+    let respond = await fetch(`https://uploads.mangadex.org/covers/${id}/${fileName}.512.jpg`);
     coverArt.push(respond.url);
   }
   return coverArt;
 }
 export async function fetchMostViewed()
 {
-  const res = await fetch('https://api.mangadex.org/manga?order[followedCount]=desc');
+  const res = await fetch('https://api.mangadex.org/manga?order[followedCount]=desc&availableTranslatedLanguage[]=en');
   const mangaMostView = await res.json();
   const promises = mangaMostView.data.map(manga => fetchLatestChapterManga(manga.id));
   const promisesTwo = mangaMostView.data.map(manga => fetchCoverMangas(manga.id));
   const allChaptersMostView = await Promise.all(promises);
   const coverArtsMostView = await Promise.all(promisesTwo);
-  console.log(mangaMostView[8])
   return {mangaMostView,coverArtsMostView,allChaptersMostView};
 }
 export async function fetchManga(page = 1) {
   try{
     let offset = (page - 1) * 10;
-    console.log(offset);
-    const res = await fetch(`https://api.mangadex.org/manga?limit=10&offset=${offset}`);
+    const res = await fetch(`https://api.mangadex.org/manga?limit=10&offset=${offset}&availableTranslatedLanguage[]=en`);
     // const mangas = await res.json();
     const result = await res.json();
     const mangas = result.data.sort((a, b) => new Date(b.attributes.updatedAt).getTime() - new Date(a.attributes.updatedAt).getTime());
@@ -155,10 +153,10 @@ export async function slideDescription(mangaDes)
 
 async function fetchAllChapter(id)
 {
-  const respond = await fetch(`https://api.mangadex.org/manga/${id}/aggregate`);
+  const respond = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
   const result = await respond.json();
   const volumes = Object.values(result.volumes);
-
+  
   let allChapter = [];
 
   for(let item in volumes)
@@ -185,8 +183,8 @@ export async function fetchRelatedMangaWithTags(mangaTagsObj,mangaId)
   // Randomly select 3 tags
   const randomTags = includedTagIDs.sort(() => 0.5 - Math.random()).slice(0, 3);
   // Join the tag IDs with '&' then fetch the related manga
-  const includedTags = randomTags.map(id => `includedTags[]=${id}`).join('&'); 
-  const respond = await fetch(`https://api.mangadex.org/manga?includedTags=${includedTags}`);
+  const includedTags = randomTags.map(id => `includedTags[]=${id}`).join('&');
+  const respond = await fetch(`https://api.mangadex.org/manga?includedTags=${includedTags}&availableTranslatedLanguage[]=en`);
   const data = await respond.json();
   // Filter out the current manga and get 5 related manga
   const mangaRelated = data.data.filter(manga => manga.id !== mangaId).slice(0,5);
@@ -199,3 +197,27 @@ export async function fetchRelatedMangaWithTags(mangaTagsObj,mangaId)
   return {mangaRelated,coverArts,LatestChapter};
 }
 
+export async function fetchChapterImages(idChapter)
+{
+  const respond = await fetch(`https://api.mangadex.org/at-home/server/${idChapter}`);
+  const result = await respond.json();
+  const host = result.baseUrl;
+  const hash = result.chapter.hash;
+
+  const promises = result.chapter.data.map(async chapter => fetch(`${host}/data/${hash}/${chapter}`));
+  const images = await Promise.all(promises.map(promise => promise.then(response => response.url)));
+  return images;
+}
+
+export async function searchManga(searchTerm)
+{
+  const respond = await fetch(`https://api.mangadex.org/manga?title=${searchTerm}&availableTranslatedLanguage[]=en&limit=4`);
+  const result = await respond.json();
+  const mangas = result.data;
+  const promises = mangas.map(manga => fetchLatestChapterManga(manga.id));
+  const allChapters = await Promise.all(promises);
+  const promisesTwo = mangas.map(manga => fetchCoverMangas(manga.id));
+  const coverArts = await Promise.all(promisesTwo);
+
+  return {mangas,allChapters,coverArts};
+}

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+
 import Link from "next/link";
 import {
   Carousel,
@@ -49,7 +48,7 @@ export default async function Home() {
                 <div key={manga.id} className="w-full md:w-[100%] lg:w-full rounded-[0.75rem] bg-[#2f2f2f] p-4 ml-[7px] mr-[7px] mb-[20px] relative">
                 {coverArts[index].map(cover => {
                   return (
-                  <Link key={manga.id} href="#" className="absolute top-4 left-4 lg:w-[140px] h-[200px]">
+                  <Link key={manga.id} href="#" className="absolute top-4 left-4 lg:w-[140px] h-[200px]" prefetch={true}>
                     <Image className="w-full h-full" src={cover} width={0} height={0} alt="Manga Cover" unoptimized></Image>
                   </Link>
                   );
@@ -70,10 +69,10 @@ export default async function Home() {
                       { allChapters[index] ? allChapters[index].map((item) => (
                         item ? (
                         <div key={item.id} className="pt-[10px] border-b border-dashed border-gray-600">
-                          <Link href="#">Chap {item.chapter}</Link>
+                          <Link href={`/detailchapter/${manga.id}/${item.id}`} className="hover:text-[#FFD700]">Chap {item.chapter}</Link>
                         </div>
                         ) : null
-                      )) : <p>Loading Chapters</p>
+                      )) : <p>No English Chapter Found</p>
                       }                  
                      </div>
                 </div>            
@@ -92,11 +91,11 @@ export default async function Home() {
                     <div className={`float-right relative top-4 p-3 lg:w-[47px] bg-[#2f2f2f] ${index <3 ? `text-[#FFD700]` : `text-white` } `}><span>{index === 9 ? "10": `0${index + 1}`}</span></div>
                     {coverArtsMostView[index].map(cover => {
                       return (
-                        <Link key={manga.id} className="block w-[60px] " href="#"><Image src={cover} alt="Manga Cover" width={100} height={0}/></Link>
+                        <Link key={manga.id} className="block w-[60px] " href="#" prefetch={true}><Image src={cover} alt="Manga Cover" width={100} height={0}/></Link>
                       )
                     })}            
                     <div className="absolute top-0 left-[4.8rem]">
-                      <Link href={`/detailpage/${manga.id}`} className="block mb-2 font-[600] hover:text-[#FFD700]">{slideTitle(manga,true)}</Link>
+                      <Link href={`/detailpage/${manga.id}`} className="block mb-2 font-[600] hover:text-[#FFD700]" prefetch={true}>{slideTitle(manga,true)}</Link>
                       <div className="text-gray-400 text-sm font-light block min-w-max text-[0.9rem] ">
                         <span className="">
                           {manga.attributes.tags.slice(0,2).map((tag) => (
@@ -107,8 +106,8 @@ export default async function Home() {
                         <div className="mt-2">
                           {
                             allChaptersMostView[index] ? (
-                              <span key={allChaptersMostView[index][0].id} className="text-[#FFD700]"><Link href="#">Chap {allChaptersMostView[index][0].chapter}</Link></span>
-                            ) : <p>Loading Chapters</p>
+                              <span key={allChaptersMostView[index][0].id} className="text-[#FFD700]"><Link href={`/detailchapter/${manga.id}/${allChaptersMostView[index][0].id}`}>Chap {allChaptersMostView[index][0].chapter}</Link></span>
+                            ) : <p>No English Chapters Found</p>
                           }                         
                         </div>
                       </div>

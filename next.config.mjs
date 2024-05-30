@@ -10,6 +10,12 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'cmdxd98sb0x3yprd.mangadex.network',
+                port:'',
+                pathname:'/**',
+            },
+            {
+                protocol: 'https',
                 hostname: 'img.icons8.com',
                 port:'',
                 pathname:'/**',

@@ -120,3 +120,12 @@ input[type=number] {
   opacity: 0.75;
 }
 
+html, body {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+}
+*{
+  box-sizing: border-box;
+}
+

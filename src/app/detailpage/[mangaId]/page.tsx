@@ -27,7 +27,7 @@ export default async function DetailPage({params} : any) {
     const {manga,allChapters,coverArt} = await fetchMangaWithID(params.mangaId);
     const {mangaRelated,coverArts,LatestChapter} = await fetchRelatedMangaWithTags(manga.attributes.tags,params.mangaId);
     return (
-        <main className="bg-[#1f1f1f] h-[170vh] relative">
+        <main className="bg-[#1f1f1f] relative">
             <Header/>
             {/* chi tiết card Manga */}
             <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full mb-10">
@@ -82,8 +82,8 @@ export default async function DetailPage({params} : any) {
             </div>
 
             {/* List of chapters */}
-            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full">
-                <ChapterList allChapters={allChapters}/>
+            <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full mb-16">
+                <ChapterList allChapters={allChapters} mangaId={params.mangaId}/>
                 
                 {/* Danh sách liên quan */}
                 <div className="container mx-auto w-full lg:w-2/5 overflow-auto px-4 pt-10 lg:pt-0 pb-10 flex flex-wrap flex-col">
@@ -93,12 +93,12 @@ export default async function DetailPage({params} : any) {
                             return(
                                 <li key={manga.id} className="flex items-center border-b border-[#2f2f2f] py-4 mb-4">                            
                                     {coverArts[index].map((item) => (
-                                    <div key={manga.id} className=" w-16 bg-gray-200 rounded-full mr-4">
-                                        <Image className="w-full h-full" src={item} alt={manga.attributes.title.en} width={0} height={0} unoptimized />
+                                    <div key={manga.id} className="min-w-16 h-20 mr-6 block">
+                                        <Image className="w-full h-full" src={item} alt={manga.attributes.title.en} width={0} height={0} unoptimized/>
                                     </div>
                                     ))}                                                                                                   
                                     <div className="flex flex-col">
-                                        <Link href={`/detailpage/${manga.id}`}>
+                                        <Link href={`/detailpage/${manga.id}`} prefetch={true}>
                                         <span className="text-white text-lg font-semibold block cursor-pointer hover:text-[#FFD700] mb-2 ">
                                             {slideTitle(manga,false)}
                                         </span>
@@ -111,7 +111,7 @@ export default async function DetailPage({params} : any) {
                                         { LatestChapter[index] ? LatestChapter[index].slice(0,1).map((item) => (
                                             item ? (
                                             <div key={item.id} className="pt-[10px] text-[#FFD700] text-sm">
-                                            <Link href="#">Chap {item.chapter}</Link>
+                                            <Link href={`/detailchapter/${manga.id}/${item.id}`}>Chap {item.chapter}</Link>
                                             </div>
                                             ) : null
                                         )) : <p>Loading Chapters</p>

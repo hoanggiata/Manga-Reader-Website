@@ -129,7 +129,7 @@ export default async function Filter({params, searchParams}:any) {
                 </div>
                 {/* Filter Button */}
                 <div className="mt-[1.5rem]">
-                    <Button type="sumbit" className="bg-[#FFD700] text-[#000000] hover:bg-[#FFEC8B]">Filter</Button>
+                    <Button className="bg-[#FFD700] text-[#000000] hover:bg-[#FFEC8B]">Filter</Button>
                 </div>
             </form>
             {/*Filter Manga*/}
@@ -144,13 +144,13 @@ export default async function Filter({params, searchParams}:any) {
                         const chapters = allChapters[index] || 'Loading Chapters';
 
                         return coverArts[index].map(cover => (
-                            <Card key={cover.id} cover={cover} mangaID={manga.id} tags={tags} chapters={chapters} title={slideTitle(manga)} />
+                            <Card key={cover.id} cover={cover} mangaID={manga.id} tags={tags} chapters={chapters} title={slideTitle(manga,false)} />
                         ));                 
                     })}                   
                 </div>                      
             </div>
             {/* Pagination */}
-            <div className="text-[#999] flex mt-[1.5rem]">
+            <div className="text-[#999] flex mt-[1.5rem] mb-20">
                 <PaginationComponent page={typeof searchParams !== `undefined` && searchParams.page}/>
             </div>
         </div>
