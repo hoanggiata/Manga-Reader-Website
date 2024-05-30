@@ -17,11 +17,11 @@ export default async function Home() {
   const {mangas,allChapters,coverArts} = await fetchManga();
   const {mangaMostView,coverArtsMostView,allChaptersMostView} = await fetchMostViewed();
   return (
-   <main className="bg-[#1f1f1f] h-[250vh] relative">
+   <main className="flex flex-col bg-[#1f1f1f] min-h-screen overflow-hidden">
 
     <Header/>
     {/* Content */}
-    <div className="w-full mt-10 mb-10">
+    <div className="flex-1 w-full mt-10 mb-10 px-4 lg:px-0">
       {/* Carousel Banner */}
       <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-[5rem] mt-[5rem]">
         <Carousel opts={{
@@ -39,8 +39,8 @@ export default async function Home() {
       </div>
         
       {/* Latest Updates and Trending */}
-      <div className="flex max-w-[1400px] justify-around ml-auto mr-auto pl-[30px] pr-[30px] lg:pl-[20px] lg:pr-[20px] text-white">       
-          <div className="font-bold lg:text-xl text-sm lg:w-[58%]">
+      <div className="flex flex-col lg:flex-row max-w-[1400px] justify-around ml-auto mr-auto pl-[30px] pr-[30px] lg:pl-[20px] lg:pr-[20px] text-white">       
+          <div className="font-bold lg:text-xl text-sm w-full lg:w-[58%] mb-10 lg:mb-0">
             <h3 className="p-5">Latest Updates</h3>
             <div className="grid gap-3 grid-cols-1 lg:grid-cols-2 w-full">
               {mangas.map((manga,index) => {
@@ -81,8 +81,8 @@ export default async function Home() {
               })}                                
             </div>
           </div>
-          <div style={{width: "calc(33.33% - 20px)"}} className="lg:float-right">
-            <div className="w-full h-[50vh] font-bold lg:text-xl text-sm">
+          <div style={{width: "calc(33.33% - 20px)"}} className="w-full lg:float-right">
+            <div className="w-full h-auto font-bold lg:text-xl text-sm">
               <h3 className="p-5">Most Viewed</h3>
               <div className="ml-4 text-lg">
                 <ul className="p-0 m-0 list-none">
