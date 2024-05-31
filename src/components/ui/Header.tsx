@@ -40,14 +40,12 @@ export default function Header()
         <SearchPopUp/>
         <span className="text-[#FFD700] ml-10 font-bold text-base hidden lg:block mt-1">Member</span>
         <div className="lg:hidden flex items-center space-x-4 ml-3">
-          <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B]" variant="default">
-            <Link href="/filter">Filter</Link>
-          </Button>
-          <button onClick={toggleSearch} className="text-white focus:outline-none">
-            <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B]" variant="default"><Link href="/filter">Filter</Link></Button>     
+          <Link href="/search">
+            <svg className="w-6 h-6 text-white focus:outline-none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
             </svg>
-          </button>
+          </Link>
           <button className="text-white focus:outline-none">
             <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" fillRule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clipRule="evenodd"/>
@@ -55,7 +53,6 @@ export default function Header()
           </button>
         </div>
       </div>  
-      <div></div>
       {isMenuOpen && (       
         <nav className="lg:hidden absolute top-full left-0 w-full bg-[#2f2f2f] z-50 py-4 overflow-hidden transition-all duration-300 ease-in-out">
           <div className="flex flex-col items-center space-y-4">
@@ -67,13 +64,13 @@ export default function Header()
           </div>
         </nav>
       )}
-      {isSearchOpen && (
+      {/* {isSearchOpen && (
         <div className="hidden absolute top-full left-0 w-full bg-[#2f2f2f] z-50 py-4 transition-all duration-300 ease-in-out">
           <div className="flex items-center px-4">
             <SearchPopUp/>
           </div>
         </div>
-      )}
+      )} */}
     </header>
    );
 }

@@ -39,7 +39,7 @@ export default async function Filter({params, searchParams}:any) {
     return(
     <main className="flex flex-col bg-[#1f1f1f] min-h-screen overflow-hidden">
         <Header/>
-        <div className="w-full max-w-[1160px] mx-auto px-4 mr-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
             {/* Breadcrumb */}
             <div className="mb-[25px]">
                 <Breadcrumb className="">
@@ -57,7 +57,7 @@ export default async function Filter({params, searchParams}:any) {
             {/* Filter */}
             <form className="text-white mb-[3rem]">
                 {/* First Filter Section */}
-                <div className="flex mx-auto">
+                <div className="flex">
                     <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center">
                         <strong>Content Rating</strong>
                         <div className="relative group ">

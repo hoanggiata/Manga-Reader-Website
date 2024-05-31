@@ -27,7 +27,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 //     })
 //     const data = await res.json();
 // }
-export default async function Filter({params, searchParams}:any) {
+export default async function Updates({params, searchParams}:any) {
     let mangas, allChapters,coverArts;
     // Fetch Manga and its chapters
     if(typeof searchParams === `undefined`) {

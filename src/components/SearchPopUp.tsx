@@ -62,7 +62,7 @@ export default function SearchPopUp()
     
     return (
         <>  
-            <div className="relative w-full flex items-center">
+            <div className="flex items-center px-4 py-2">
                 <Input className="hidden lg:block bg-white relative pl-16 pr-16 h-[45px]" placeholder="Search your manga here" onChange={handleOnChange} value={value}/>
                 <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] overflow-hidden hover:bg-[#FFEC8B] absolute ml-3" variant="default"><Link href="/filter" prefetch={true}>Filter</Link></Button>
             </div>
