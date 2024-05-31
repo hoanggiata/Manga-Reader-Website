@@ -3,7 +3,7 @@ import * as React from "react";
 import Link from "next/link";
 import {Input} from "@/components/ui/input";
 import { useState,useRef } from "react";
-export default function ChapterList({allChapters,mangaId} : any)
+export default function ChapterList({allChapters,mangaId,readChapter} : any)
 {
     const [search,setSearch] = useState("");
     const ulRef = useRef(null);
@@ -54,19 +54,19 @@ export default function ChapterList({allChapters,mangaId} : any)
             <div className="container mr-5 ml-0 w-full pl-0 pr-0 pt-10 lg:pt-0 flex flex-wrap bg-[#2f2f2f] rounded">                  
                 <div className=" w-full h-full">
                     <ul ref={ulRef} className=" overflow-auto lg:h-[57vh] list-chapter list-none p-0 m-0 border-t-1 border-[#2f2f2f] flex flex-col">
-                        {allChapters && allChapters.map((volume) => (
-                            volume.chapterArray.map((item) => (
-                                <li key={item.id} className="flex items-center border-b border-[#2f2f2f] py-4">
-                                    <div className="pl-4 flex">
-                                        <div className="w-5 h-5 bg-[#FFD700] rounded-full mr-4"></div>
-                                        <Link href={`/detailchapter/${mangaId}/${item.id}`}>
-                                            <span className="list-content text-white hover:text-opacity-75 text-sm font-medium block cursor-pointer">
-                                                <span className="">Chapter {item.chapter}</span> 
-                                            </span>
-                                    </Link>
-                                    </div>
-                                </li> 
-                            ))
+                    {allChapters && allChapters.map((volume) => (
+                        volume.chapterArray.map((item) => (
+                            <li key={item.id} className="flex items-center border-b border-[#2f2f2f] py-4">
+                            <div className="pl-4 flex">
+                                <div className="w-5 h-5 bg-[#FFD700] rounded-full mr-4"></div>
+                                <Link href={`/detailchapter/${mangaId}/${item.id}`}>
+                                    <span className={`list-content ${readChapter.length > 0 && readChapter.some(read => read.chapterId === item.id) ? "text-gray-500 hover:text-opacity-75" : "text-white" } hover:text-opacity-75 text-sm font-medium block cursor-pointer`}>
+                                        <span className="">Chapter {item.chapter}</span>
+                                    </span>
+                                </Link>
+                            </div>
+                            </li>
+                        ))
                         ))}
                                                         
                     </ul>

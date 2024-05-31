@@ -13,7 +13,9 @@ import {fetchChapterImages, fetchMangaWithID, slideTitle} from "@/utils/utils";
 import ImageChapter from "@/components/ImageChapter";
 import Loading from "./loading";
 import SelectComponent from "@/components/SelectComponent";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import UserChapter from "@/models/userchapter";
 type Props = {
     params: {
         mangaId: string;
@@ -28,7 +30,27 @@ export const generateMetadata = async ({params} : Props): Promise<Metadata> =>{
 };
 
 export default async function DetailChapter({params} : any) {
+    const session = await getServerSession(authOptions);
     const {manga,allChapters} = await fetchMangaWithID(params.mangaId);
+    try {     
+        let link2 = new URL(`${process.env.NEXTAUTH_URL}/api/readChapter`);
+        const respond = await fetch(link2,{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({mangaId:params.mangaId,chapterId:params.chapterId,email:session?.user?.email}),
+        });
+        if(respond.ok)
+        {
+            console.log("Chapter read successfully");
+        }
+        else{
+            console.log("Chapter read failed");
+        }
+    } catch (error) {
+        console.log("Error during add chapter:",error);
+    }
     return (
         <main className="bg-[#1f1f1f] flex-grow relative">
             <Header/>

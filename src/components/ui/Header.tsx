@@ -1,69 +1,63 @@
-"use client";
+
 import * as React from "react";
 import Link from "next/link";
 import { Button } from "./button";
 import SearchPopUp from "../SearchPopUp";
-export default function Header()
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import NavbarItem from "../NavbarItem";
+import MemberPopup from "../MemberPopup";
+
+export default async function Header()
 {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  return(
-    <header className="w-full h-20 flex bg-[#2f2f2f] justify-between items-center px-4 lg:px-10 mb-[25px] relative">
-      <div className="flex items-center">
-        <button onClick={toggleMenu} className="lg:hidden text-white focus:outline-none">
-          <svg className="w-6 h-6 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
-          </svg>
-        </button>
-        <Link href="/" className="text-[#FFD700] text-3xl font-bold ">AE MANGA</Link>
-        <nav className="ml-[3rem] hidden lg:flex items-center">
-          <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">UPDATES</Link>
-          <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">MANGA LIST</Link>
-          <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">FAVORITED</Link>
-          <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">ABOUT US</Link>
-        </nav>  
-      </div>
-      
-      <div className="flex items-center relative ml-28">
-        
-        {/* <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-[153px]" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
-        <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
-        </svg> */}
-        
-        <SearchPopUp/>
-        <span className="text-[#FFD700] ml-10 font-bold text-base hidden lg:block mt-1">Member</span>
-        <div className="lg:hidden flex items-center space-x-4 ml-3">
-          <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B]" variant="default">
-            <Link href="/filter">Filter</Link>
-          </Button>
-          <button className="text-white focus:outline-none">
-            <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+  const session = await getServerSession(authOptions);
+  return(  
+      <header className="w-full h-20 flex bg-[#2f2f2f] justify-center items-center px-4 lg:px-10 mb-[25px] relative">
+        <div className="flex items-center">
+          {/* <button onClick={toggleMenu} className="lg:hidden text-white focus:outline-none">
+            <svg className="w-6 h-6 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
             </svg>
-          </button>
-          <button className="text-white focus:outline-none">
-            <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-            </svg>
-          </button>
+          </button> */}
+          <NavbarItem/>
+          <Link href="/" className="text-[#FFD700] text-base lg:text-3xl font-bold ">AE MANGA</Link>
+          <nav className="ml-[3rem] hidden lg:flex items-center">
+            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">UPDATES</Link>
+            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">MANGA LIST</Link>
+            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">FAVORITED</Link>
+            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]">ABOUT US</Link>
+          </nav>  
         </div>
-      </div>  
-      <div></div>
-      {isMenuOpen && (       
-        <nav className="lg:hidden absolute top-full left-0 w-full bg-[#2f2f2f] z-50 py-4 overflow-hidden transition-all duration-300 ease-in-out">
-          <div className="flex flex-col items-center space-y-4">
-            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]" onClick={toggleMenu}>UPDATES</Link>
-            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]" onClick={toggleMenu}>MANGA LIST</Link>
-            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]" onClick={toggleMenu}>FAVORITED</Link>
-            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]" onClick={toggleMenu}>ABOUT US</Link>
-            <Link href="/" className="text-[#FFD700] text-base font-medium lg:mr-7 mr-5 hover:text-[#CCB000]" onClick={toggleMenu}>CONTACT</Link>
+        
+        <div className="flex items-center relative ml-28">
+          
+          {/* <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-[153px]" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
+          <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
+          </svg> */}
+          
+          <SearchPopUp/>
+          <div className="group">
+            <Link href={!session?.user ? "/auth/sign-in" : "#"} className="text-[#FFD700] ml-10 font-bold text-base hidden lg:block min-w-max mt-1 ">{session?.user ? `Hello ${session?.user?.name}` : "Sign In"}</Link>
+            <MemberPopup isLogin={session?.user ? true : false}/>
           </div>
-        </nav>
-      )}
-    </header>
+          
+          <div className="lg:hidden flex items-center space-x-4 ml-3">
+            <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B]" variant="default">
+              <Link href="/filter">Filter</Link>
+            </Button>
+            <button className="text-white focus:outline-none">
+              <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+              </svg>
+            </button>
+            <button className="text-white focus:outline-none">
+              <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+        </div>  
+        
+      </header>
    );
 }

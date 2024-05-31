@@ -7,7 +7,8 @@ import Link from "next/link";
 import { fetchMangaWithID, slideDescription, slideTitle,fetchRelatedMangaWithTags } from "@/utils/utils";
 import { Metadata } from "next";
 import ChapterList from "@/components/ChapterList";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
 type Props = {
     params: {
         mangaId: string;
@@ -22,8 +23,34 @@ export const generateMetadata = async ({params} : Props): Promise<Metadata> =>{
         title: `${slideTitle(manga,false)}`,
     };
 };
-
+async function fetchAllReadChapter(email,mangaId)
+{
+    try {
+        let link = new URL(`${process.env.NEXTAUTH_URL}/api/readChapter/allReadChapter`);
+        const respond = await fetch(link,{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email:email,mangaId:mangaId}),
+        });
+        if(respond.ok)
+        {
+            const data = await respond.json();
+            console.log("Fetch all read chapter successfully");
+            return data;           
+        }
+        else{
+            console.log("Chapter read failed");
+        }
+    } catch (error) {
+        console.log("Error during fetch all read chapter:",error);
+    }
+}
 export default async function DetailPage({params} : any) {
+    const session = await getServerSession(authOptions);
+    const allReadChapter = await fetchAllReadChapter(session?.user?.email,params.mangaId);
+    console.log(allReadChapter);
     const {manga,allChapters,coverArt} = await fetchMangaWithID(params.mangaId);
     const {mangaRelated,coverArts,LatestChapter} = await fetchRelatedMangaWithTags(manga.attributes.tags,params.mangaId);
     return (
@@ -83,7 +110,7 @@ export default async function DetailPage({params} : any) {
 
             {/* List of chapters */}
             <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full mb-16">
-                <ChapterList allChapters={allChapters} mangaId={params.mangaId}/>
+                <ChapterList allChapters={allChapters} mangaId={params.mangaId} readChapter={allReadChapter}/>
                 
                 {/* Danh sách liên quan */}
                 <div className="container mx-auto w-full lg:w-2/5 overflow-auto px-4 pt-10 lg:pt-0 pb-10 flex flex-wrap flex-col">

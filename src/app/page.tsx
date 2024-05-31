@@ -23,7 +23,7 @@ export default async function Home() {
     {/* Content */}
     <div className="flex-1 w-full mt-10 mb-10 px-4 lg:px-0">
       {/* Carousel Banner */}
-      <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-[5rem] mt-[5rem]">
+      <div className="max-w-[1400px] max-h-[400px] w-[100%] lg:pl-[20px] lg:pr-[20px] lg:max-w-[1225px] lg:ml-auto lg:mr-auto mb-10 lg:mb-[5rem] lg:mt-[5rem]">
         <Carousel opts={{
           align: "start",
           loop: true,
