@@ -81,20 +81,20 @@ export default async function Home() {
               })}                                
             </div>
           </div>
-          <div style={{width: "calc(33.33% - 20px)"}} className="w-full lg:float-right">
+          <div style={{width: "calc(33.33% - 20px)"}} className="w-full lg:w-1/3 lg:float-right lg:mr-5">
             <div className="w-full h-auto font-bold lg:text-xl text-sm">
               <h3 className="p-5">Most Viewed</h3>
               <div className="ml-4 text-lg">
                 <ul className="p-0 m-0 list-none">
                   {mangaMostView.data.map((manga,index) => (
                     <li key={manga.id} className="relative mb-[25px]">
-                    <div className={`float-right relative top-4 p-3 lg:w-[47px] bg-[#2f2f2f] ${index <3 ? `text-[#FFD700]` : `text-white` } `}><span>{index === 9 ? "10": `0${index + 1}`}</span></div>
+                    <div className={`float-right relative top-11 lg:top-4 p-3 lg:w-[47px] bg-[#2f2f2f] ${index <3 ? `text-[#FFD700]` : `text-white` } `}><span>{index === 9 ? "10": `0${index + 1}`}</span></div>
                     {coverArtsMostView[index].map(cover => {
                       return (
-                        <Link key={manga.id} className="block w-[60px] " href="#" prefetch={true}><Image src={cover} alt="Manga Cover" width={100} height={0}/></Link>
+                        <Link key={manga.id} className="block w-[60px]" href="#" prefetch={true}><Image src={cover} alt="Manga Cover" width={100} height={0}/></Link>
                       )
                     })}            
-                    <div className="absolute top-0 left-[4.8rem]">
+                    <div className="absolute top-11 lg:top-0 left-[4.8rem]">
                       <Link href={`/detailpage/${manga.id}`} className="block mb-2 font-[600] hover:text-[#FFD700]" prefetch={true}>{slideTitle(manga,true)}</Link>
                       <div className="text-gray-400 text-sm font-light block min-w-max text-[0.9rem] ">
                         <span className="">
