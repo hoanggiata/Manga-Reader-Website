@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "./context/AuthProvider";
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
+import Loading from "@/app/loading";
+import { Suspense } from "react";
+import { Toaster, toast } from 'sonner'
 
 const poppins = Poppins({ weight: ['400', '700'],
 style: ['normal', 'italic'],
@@ -21,7 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        {children}</body>
+        <Suspense fallback={<Loading />}>
+          <Header />
+        </Suspense>       
+        {children}
+        <Toaster richColors position="top-right"/>
+        <Footer/>
+      </body>
     </html>
   );
 }

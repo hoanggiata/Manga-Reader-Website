@@ -1,6 +1,3 @@
-
-import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,36 +7,57 @@ import {
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb"
 import {fetchAllTag, fetchManga, slideTitle} from "@/utils/utils"; 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { use, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Card from "@/components/ui/Card";
-import GenreSelection  from "@/components/ui/GenreSelection";
+import FilterSelection  from "@/components/ui/FilterSelection";
 import PaginationComponent from "@/components/PaginationComponent";
-// const handlePost = async(request) =>
-// {
-//     "use server"
-//     const res = await fetch(`https://localhost:3000/api/filter`,{
-//         method: 'POST',
-//         body: request
-//     })
-//     const data = await res.json();
-// }
 export default async function Filter({params, searchParams}:any) {
-    let mangas, allChapters,coverArts;
+    let mangas, allChapters,coverArts,totalManga,includedTags;
+    let filters: {[key:string]:any} = {
+        contentRating: "",
+        status: "",
+        publicationDemographic:"" 
+    };
+    let queryParams = "";
     // Fetch Manga and its chapters
     if(typeof searchParams === `undefined`) {
-        ({mangas, allChapters, coverArts} = await fetchManga());
-    } else {       
-        ({mangas, allChapters, coverArts} = await fetchManga(searchParams.page));
+        ({mangas, allChapters, coverArts,totalManga} = await fetchManga());
+    }else {
+        const contentRating = searchParams[`contentRating`] || searchParams[`contentRating[]`];
+        includedTags = searchParams[`includedTags`] || searchParams[`includedTags[]`];
+        const status = searchParams[`status`] || searchParams[`status[]`];
+        const publicationDemographic = searchParams[`publicationDemographic`] || searchParams[`publicationDemographic[]`];
+        filters.contentRating = [contentRating];
+        filters.status = [status];
+        filters.publicationDemographic = [publicationDemographic];
+        const queryTagFilters = Object.keys(filters).filter(key => filters[key].toString() !== 'any' && filters[key].toString() !== '')
+        .map(key => `${key}[]=${filters[key]}`)
+        .join('&');
+
+        if(typeof includedTags !== `undefined` && Array.isArray(includedTags) ){
+            let queryTagIDs = includedTags.map((tagID: string) => `includedTags[]=${tagID}`).join('&');
+            if(queryTagFilters){
+                queryParams = queryTagIDs.concat('&',queryTagFilters);
+            }
+            else{
+                queryParams = queryTagIDs;
+            }
+        }else if(typeof includedTags !== `undefined`){
+            let queryTagIDs = `includedTags[]=${includedTags}`;
+            if(queryTagFilters){
+                queryParams = queryTagIDs.concat('&',queryTagFilters);
+            }
+            else
+            {
+                queryParams = queryTagIDs;
+            }
+        }
+        console.log("queryParams",queryParams);      
+        ({mangas, allChapters, coverArts,totalManga} = await fetchManga(typeof searchParams.page !== `undefined` ? searchParams.page : 1,20,"",queryParams !== "" ? queryParams : queryTagFilters ? queryTagFilters : ""));
     }
     const {tags} = await fetchAllTag(); 
     return(
-    <main className="bg-[#1f1f1f] h-[250vh] relative">
-        <Header/>
-        <div className="w-[1160px] ml-auto mr-auto">
+    <main className="bg-[#1f1f1f] relative flex flex-col min-h-screen overflow-hidden pt-10">
+        <div className="max-w-[1160px] pl-4 pr-4 lg:p-0 lg:ml-auto lg:mr-auto">
             {/* Breadcrumb */}
             <div className="mb-[25px]">
                 <Breadcrumb className="">
@@ -55,83 +73,7 @@ export default async function Filter({params, searchParams}:any) {
                 </Breadcrumb>
             </div>
             {/* Filter */}
-            <form className="text-white mb-[3rem]">
-                {/* First Filter Section */}
-                <div className="flex">
-                    <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center">
-                        <strong>Content Rating</strong>
-                        <div className="relative group ">
-                            <select name="contentRating" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
-                                <option className="min-h-[1.2em]">Any</option>
-                                <option className="min-h-[1.2em]">Safe</option>
-                                <option className="min-h-[1.2em]">Suggestive</option>
-                                <option className="min-h-[1.2em]">Erotica</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center">
-                        <strong>Status</strong>
-                        <div className="relative group ">
-                            <select name="status" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
-                                <option className="min-h-[1.2em]">Any</option>
-                                <option className="min-h-[1.2em]">Ongoing</option>
-                                <option className="min-h-[1.2em]">Completed</option>
-                                <option className="min-h-[1.2em]">Hiatus</option>
-                                <option className="min-h-[1.2em]">Cancelled</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                {/* Second Filter Section */}
-                <div className="flex">
-                    <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[8px] border rounded-[6px] border-gray-600 items-center">
-                        <strong>Sort</strong>
-                        <div className="relative group ">
-                            <select name="sort" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
-                                <option className="min-h-[1.2em]">None</option>
-                                <option className="min-h-[1.2em]">Best Match</option>
-                                <option className="min-h-[1.2em]">Latest Upload</option>
-                                <option className="min-h-[1.2em]">Oldest Upload</option>
-                                <option className="min-h-[1.2em]">Highest Rating</option>
-                                <option className="min-h-[1.2em]">Lowest Rating</option>
-                                <option className="min-h-[1.2em]">Recently Added</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[8px] border rounded-[6px] border-gray-600 items-center">
-                        <strong>Magazine Demographic</strong>
-                        <div className="relative group ">
-                            <select name="demographic" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
-                                <option className="min-h-[1.2em]">Any</option>
-                                <option className="min-h-[1.2em]">Shounen</option>
-                                <option className="min-h-[1.2em]">Shoujo</option>
-                                <option className="min-h-[1.2em]">Seinen</option>
-                                <option className="min-h-[1.2em]">Josei</option>                           
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[8px] border rounded-[6px] border-gray-600 items-center">
-                        <strong>Publication year</strong>
-                        <div className="relative group ">
-                            <Input name="year" className="ml-2 bg-[#1f1f1f] outline-none border-0" type="number"></Input>
-                        </div>
-                    </div>
-                </div>
-                {/* Genres Section */}
-                <div className="mt-[1rem]">
-                    <div className="mb-[16px]">
-                        <strong>Genres</strong>
-                    </div>
-                    {/* Genres buttons */}
-                    <GenreSelection genres={tags}/>
-                    
-                    
-                </div>
-                {/* Filter Button */}
-                <div className="mt-[1.5rem]">
-                    <Button className="bg-[#FFD700] text-[#000000] hover:bg-[#FFEC8B]">Filter</Button>
-                </div>
-            </form>
+            <FilterSelection genres={tags} filters={filters} includedTags={includedTags}/>
             {/*Filter Manga*/}
             <div className="text-white">
                 <div className="text-[24px] font-semibold mb-[15px]">
@@ -143,7 +85,7 @@ export default async function Filter({params, searchParams}:any) {
                         const tags = manga.attributes.tags.slice(0,3);
                         const chapters = allChapters[index] || 'Loading Chapters';
 
-                        return coverArts[index].map(cover => (
+                        return coverArts[index].map(cover => (                       
                             <Card key={cover.id} cover={cover} mangaID={manga.id} tags={tags} chapters={chapters} title={slideTitle(manga,false)} />
                         ));                 
                     })}                   
@@ -151,10 +93,9 @@ export default async function Filter({params, searchParams}:any) {
             </div>
             {/* Pagination */}
             <div className="text-[#999] flex mt-[1.5rem] mb-20">
-                <PaginationComponent page={typeof searchParams !== `undefined` && searchParams.page}/>
+                <PaginationComponent page={typeof searchParams !== `undefined` && searchParams.page} totalManga={totalManga} queryParams={queryParams}/>
             </div>
-        </div>
-        <Footer/>      
+        </div> 
     </main>  
     );
 }

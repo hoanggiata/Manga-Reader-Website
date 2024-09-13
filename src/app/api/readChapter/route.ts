@@ -3,13 +3,13 @@ import UserChapter from "@/models/userchapter";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
-export async function POST(req)
+export async function POST(req: Request)
 {
     try {
         await connectMongoDB();
         const {mangaId,chapterId,email} = await req.json();
         const userChapterRes = await UserChapter.findOne({email,chapterId});
-        if(userChapterRes)
+        if(userChapterRes || !email)
         {
             return NextResponse.json({ message: "Chapter already exists for this user" }, { status: 409 });
         }

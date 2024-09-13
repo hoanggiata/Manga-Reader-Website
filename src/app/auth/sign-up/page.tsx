@@ -5,9 +5,7 @@ import Header from "@/components/ui/Header";
 export default function SignUp() {
     return(
         <main className="w-full min-h-screen bg-[#1f1f1f]">
-            <Header/>
             <RegisterForm/>
-            <Footer/>
         </main>     
     );
 }
