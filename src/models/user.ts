@@ -13,6 +13,10 @@ const userSchema = new Schema({
         type:String,
         require:true
     },
+    type:{
+        type:String,
+        require:true
+    }
 },{timestamps:true});
 
 const User = models.User || mongoose.model("User",userSchema);

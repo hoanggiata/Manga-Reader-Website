@@ -2,11 +2,28 @@
 import * as React from "react";
 import Link from "next/link";
 import {Input} from "@/components/ui/input";
-import { useState,useRef } from "react";
-export default function ChapterList({allChapters,mangaId,readChapter} : any)
+import { useState,useRef,useEffect } from "react";
+import { fetchAllReadChapter } from "@/utils/utils";
+export default function ChapterList({allChapters,mangaId,session,nextAuthUrl} : any)
 {
-    const [search,setSearch] = useState("");
+    const [readChapter,setReadChapter] = useState([]);
+    const [search,setSearch] = useState(""); 
+    console.log(allChapters) ;
     const ulRef = useRef(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchAllReadChapter(session?.user?.email,mangaId,nextAuthUrl);
+                if(typeof data !== "undefined")
+                {
+                    setReadChapter(data);              
+                }
+            } catch (error) {
+                console.error("Error fetching readed chapters:", error);
+            }
+        };
+        fetchData();
+    },[mangaId,session?.user?.email]);
     function handleSearch(e : any)
     {
         const filter = e.target.value;
@@ -51,9 +68,9 @@ export default function ChapterList({allChapters,mangaId,readChapter} : any)
                 <h2 className="text-lg text-white font-bold mr-10 ">List Chapter</h2>
                 <Input type="number" className="w-full lg:w-1/3 ml-10 text-white" onChange={handleSearch} value={search} placeholder="Number of Chapter"/>
             </div>
-            <div className="container mr-5 ml-0 w-full pl-0 pr-0 pt-10 lg:pt-0 flex flex-wrap bg-[#2f2f2f] rounded">                  
+            <div className="container mr-5 ml-0 w-full pl-0 pr-0 pt-0 flex flex-wrap bg-[#2f2f2f] rounded">                  
                 <div className=" w-full h-full">
-                    <ul ref={ulRef} className=" overflow-auto lg:h-[57vh] list-chapter list-none p-0 m-0 border-t-1 border-[#2f2f2f] flex flex-col">
+                    <ul ref={ulRef} className="overflow-y-auto h-[57vh] list-chapter list-none p-0 m-0 border-t-1 border-[#2f2f2f] flex flex-col">
                     {allChapters && allChapters.map((volume) => (
                         volume.chapterArray.map((item) => (
                             <li key={item.id} className="flex items-center border-b border-[#2f2f2f] py-4">
@@ -67,8 +84,7 @@ export default function ChapterList({allChapters,mangaId,readChapter} : any)
                             </div>
                             </li>
                         ))
-                        ))}
-                                                        
+                        ))}                                                        
                     </ul>
                 </div>
             </div>

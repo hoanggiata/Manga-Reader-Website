@@ -1,45 +1,86 @@
+import { join } from "path";
 
-async function fetchLatestChapterManga(id)
+export async function fetchLatestChapterManga(id)
 {
-  const res = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
-  const result = await res.json();
-  const volumes = Object.values(result.volumes);
-  if(volumes.length === 0) return null;
-  const latestVolume = await volumes[volumes.length - 1];
-  const chapters = Object.entries(latestVolume.chapters);
-  // Sort chapters by the order they were added (assuming they're added in order)
-  chapters.sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]));
+  try {
+    const res = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
+    if(!res.ok)
+    {
+      return [];
+    }
+    const result = await res.json();
+    const volumes = Object.values(result.volumes);
+    if(volumes.length === 0) return null;
+    const latestVolume = await volumes[volumes.length - 1];
+    const chapters = Object.entries(latestVolume.chapters);
+    // Sort chapters by the order they were added (assuming they're added in order)
+    chapters.sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]));
 
-  let ChaptersObject = [];
-  // true for latest and main page, false for all of the chapter in the latest volumes
-  for(let i = 0; i < 3; i++) {
-    if(chapters[i]) ChaptersObject.push(chapters[i][1]);
-  }
-  return ChaptersObject;
+    let ChaptersObject = [];
+    // true for latest and main page, false for all of the chapter in the latest volumes
+    for(let i = 0; i < 3; i++) {
+      if(chapters[i]) ChaptersObject.push(chapters[i][1]);
+    }
+    return ChaptersObject;
+  } catch (error) {
+    console.error('Error fetching latest chapter:', error);
+    return [];
+  }  
 }
-async function fetchFileNames(id)
+async function fetchAllChapter(id)
 {
-  const respond = await fetch(`https://api.mangadex.org/manga/${id}?includes[]=author&includes[]=artist&includes[]=cover_art`);
+  const respond = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
   const result = await respond.json();
-  let fileName = [];
-  result.data.relationships.map(item =>{
-    if(item.type === "cover_art")
-      {
-        fileName.push(item.attributes.fileName);
-      }
-  });
-  return fileName;
-}
-async function fetchCoverMangas(id)
-{
-  const fileName = await fetchFileNames(id);
-  let coverArt = [];
-  for(let i = 0; i < fileName.length; i++)
+  const volumes = Object.values(result.volumes);
+  
+  let allChapter = [];
+
+  for(let item in volumes)
   {
-    let respond = await fetch(`https://uploads.mangadex.org/covers/${id}/${fileName}.512.jpg`);
-    coverArt.push(respond.url);
+    let volumeObject = {
+      volume: volumes[item].volume,
+      chapterArray: [],
+    };
+    Object.values(volumes[item].chapters).map(chapter => volumeObject.chapterArray.push(chapter));
+    allChapter.push(volumeObject);
   }
-  return coverArt;
+  return allChapter;
+}
+async function fetchFileNames(id) {
+  try {
+    const response = await fetch(`https://api.mangadex.org/manga/${id}?includes[]=author&includes[]=artist&includes[]=cover_art`);
+    if (!response.ok) {
+      // throw new Error(`API request failed with status ${response.status}`);
+      return [];
+    }
+    const result = await response.json();
+    const fileName = result.data.relationships.filter(item => item.type === "cover_art").map(item => item.attributes.fileName);
+    return fileName;
+  } catch (error) {
+    console.error('Error fetching file names:', error);
+    return []; // Or handle the error differently (e.g., throw it for further handling)
+  }
+}
+
+export async function fetchCoverMangas(id) {
+  try {
+    const fileName = await fetchFileNames(id);
+    if (fileName.length === 0) {
+      return []; // No cover art found
+    }
+    const coverArt = await Promise.all(fileName.map(async (fileName) => {
+      const response = await fetch(`https://uploads.mangadex.org/covers/${id}/${fileName}.512.jpg`);
+      if (!response.ok) {
+        // throw new Error(`Failed to fetch cover image for ${fileName}`); // Handle specific error
+        return []
+      }
+      return response.url;
+    }));
+    return coverArt;
+  } catch (error) {
+    console.error('Error fetching cover art:', error);
+    return []; // Or handle the error differently (e.g., throw it for further handling)
+  }
 }
 export async function fetchMostViewed()
 {
@@ -51,23 +92,31 @@ export async function fetchMostViewed()
   const coverArtsMostView = await Promise.all(promisesTwo);
   return {mangaMostView,coverArtsMostView,allChaptersMostView};
 }
-export async function fetchManga(page = 1) {
+export async function fetchManga(page = 1,limit=10,title="",queryFilter: string ="") {
   try{
-    let offset = (page - 1) * 10;
-    const res = await fetch(`https://api.mangadex.org/manga?limit=10&offset=${offset}&availableTranslatedLanguage[]=en`);
+    let offset = (page - 1) * limit;
+    // console.log(`https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&availableTranslatedLanguage[]=en${title !== "" ? `&title=${title}` : ""}${queryFilter !== "" ? `&${queryFilter}` : ""}`);
+    const res = await fetch(`https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&availableTranslatedLanguage[]=en${title !== "" ? `&title=${title}` : ""}${queryFilter !== "" ? `&${queryFilter}` : ""}`);
     // const mangas = await res.json();
+    if(!res.ok)
+    {
+      return {mangas:[],allChapters:[],coverArts:[],totalManga:0};
+    }
     const result = await res.json();
+    const totalManga = result.total;
     const mangas = result.data.sort((a, b) => new Date(b.attributes.updatedAt).getTime() - new Date(a.attributes.updatedAt).getTime());
     const promises = mangas.map(manga => fetchLatestChapterManga(manga.id));
     const allChapters = await Promise.all(promises);
     const promisesTwo = mangas.map(manga => fetchCoverMangas(manga.id));
     const coverArts = await Promise.all(promisesTwo);
-    return {mangas,allChapters,coverArts};
+    return {mangas,allChapters,coverArts,totalManga};
   }catch(error)
   {
     console.error("Failed to fetch manga: ",error);
+    return {mangas:[],allChapters:[],coverArts:[],totalManga:0};
   }
 }
+
 
 export function slideTitle(manga,boolean)
 {
@@ -88,10 +137,18 @@ export function slideTitle(manga,boolean)
   }
   if(boolean === true)
   {
-    displayTilte = title.length > 15 ? title.slice(0, 17) + "..." : title;
+    // displayTilte = title.length >=20 ? title.slice(0, 20) + "..." : title;
+    displayTilte = title;
   }
   else{
-     displayTilte = title;//title.length > 50 ? title.slice(0, 50) + "..." : title;;
+    if(title.length > 70)
+    {
+      displayTilte = title.slice(0, 60) + "...";
+    }
+    else
+    {
+      displayTilte = title;
+    }
   }
   return displayTilte;
 }
@@ -136,7 +193,47 @@ export async function fetchMangaWithID(id)
   const coverArt =  await fetchCoverManga(manga.id);
   return {manga,allChapters,coverArt};
 }
-
+export async function fetchFollowedMangasWithID(idArray)
+{
+  
+  const promises = idArray.map(id => fetchLatestChapterManga(id));
+  const allChapters = await Promise.all(promises);
+  const promisesTwo = idArray.map(id => fetchCoverMangas(id));
+  const coverArts = await Promise.all(promisesTwo);
+  const mangas = await Promise.all(idArray.map(async (id) => {
+    const response = await fetch(`https://api.mangadex.org/manga/${id}`);
+    const data = await response.json();
+    return data;
+  }));
+  return {mangas,allChapters,coverArts};
+  // idArray.map(id => {
+  //   console.log("ID: ",id);
+  //   // let manga,allChapters,coverArt;
+  //   // const result = await fetchMangaWithID(id);
+  //   // ({manga,allChapters,coverArt} = result);
+  //   // mangas.push(manga);
+  //   // chapters.push(allChapters);
+  //   // coverArts.push(coverArt);
+  // })
+  return idArray;
+  // try {
+  //   idArray.map(id => async () => {
+  //     console.log("ID: ",id);
+  //     const respond = await fetch(`https://api.mangadex.org/manga/${id}`);
+  //     if(!respond.ok) return [];
+  //     const result = await respond.json();
+  //     console.log("Mangas :",result);
+  //     const allChapters = await fetchLatestChapterManga(result.data.id);
+  //     const coverArt =  await fetchCoverMangas(result.data.id);
+  //     mangas.push(result.data);
+  //     chapters.push(allChapters);
+  //     coverArts.push(coverArt);
+  //   })
+  //   return {mangas,chapters,coverArts};
+  // } catch (error) {
+  //   return {mangas:[],allChapters:[],coverArts:[]};
+  // }
+}
 export async function slideDescription(mangaDes)
 {
   let description; 
@@ -147,29 +244,12 @@ export async function slideDescription(mangaDes)
   else
   {
     description = mangaDes.slice(0, 247) + "...";
+    // description = mangaDes;
   }
   return description;
 }
 
-async function fetchAllChapter(id)
-{
-  const respond = await fetch(`https://api.mangadex.org/manga/${id}/aggregate?translatedLanguage[]=en`);
-  const result = await respond.json();
-  const volumes = Object.values(result.volumes);
-  
-  let allChapter = [];
 
-  for(let item in volumes)
-  {
-    let volumeObject = {
-      volume: volumes[item].volume,
-      chapterArray: [],
-    };
-    Object.values(volumes[item].chapters).map(chapter => volumeObject.chapterArray.push(chapter));
-    allChapter.push(volumeObject);
-  }
-  return allChapter;
-}
 export async function fetchRelatedMangaWithTags(mangaTagsObj,mangaId)
 {
   // Add tag names to an array
@@ -214,10 +294,102 @@ export async function searchManga(searchTerm)
   const respond = await fetch(`https://api.mangadex.org/manga?title=${searchTerm}&availableTranslatedLanguage[]=en&limit=4`);
   const result = await respond.json();
   const mangas = result.data;
+  console.log("Result: ",result);
   const promises = mangas.map(manga => fetchLatestChapterManga(manga.id));
   const allChapters = await Promise.all(promises);
   const promisesTwo = mangas.map(manga => fetchCoverMangas(manga.id));
   const coverArts = await Promise.all(promisesTwo);
-
   return {mangas,allChapters,coverArts};
 }
+export async function fetchAllReadChapter(email : string,mangaId : string,nextAuthUrl:string)
+{
+  try {        
+      let link = new URL(`${nextAuthUrl}/api/readChapter/allReadChapter`);
+      const respond = await fetch(link,{
+          method: "POST",
+          headers:{
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({email:email,mangaId:mangaId}),
+      });
+      if(respond.ok)
+      {
+          const data = await respond.json();
+          return data;           
+      }
+      else{
+          console.log("Chapter read failed");
+          return null;
+      }
+  } catch (error) {
+      console.log("Error during fetch all read chapter:",error);
+  }
+}
+
+export async function fetchTagFilterId(filterArray : Array<string>)
+{
+  try {
+    const response = await fetch(`https://api.mangadex.org/manga/tag`);
+  
+    if (!response.ok) {
+      throw new Error(`Failed to fetch tags: ${response.status}`); // Include status code for more context
+    }
+  
+    const data = await response.json();
+    const includedTagIDs = data.data
+      .filter(tag => filterArray.includes(tag.attributes.name.en))
+      .map(tag => tag.id);
+  
+    return includedTagIDs;
+  } catch (error) {
+    console.error('Error fetching tag filter IDs:', error);
+    // Consider handling the error gracefully within your React component to prevent breaking the application:
+    return []; // Return an empty array or handle it differently based on your use case
+  }  
+}
+export async function fetchTagFilterWithID(filterArray: Array<string>)
+{
+  try {
+    const respond = await fetch(`https://api.mangadex.org/manga/tag`);
+    if(!respond.ok)
+    {
+      throw new Error(`API request failed with status: ${respond.status}`);
+    }
+    const data = await respond.json();
+    const includedTagIDs = data.data.filter(tag => filterArray.includes(tag.id))
+    .map(tag => tag.attributes.name.en);
+
+    return includedTagIDs;
+  } catch (error) {
+    console.error(`Error fetching tag filter with ID:`, error);
+    return [];
+  }
+}
+export async function fetchMangasWithFilter(filters : {[key:string]:any},tagIDs: Array<string>)
+{
+  try {
+    let queryTagIDs = tagIDs.map(tagID => `includedTags[]=${tagID}`).join('&');
+    const queryTagFilters = Object.keys(filters).filter(key => filters[key].toString() !== 'any')
+    .map(key => `${key}[]=${filters[key]}`)
+    .join('&');
+
+    let queryParams = queryTagIDs.concat('&',queryTagFilters);
+    const respond = await fetch(`https://api.mangadex.org/manga?${queryParams}&`,{
+      method: "GET",
+      headers:{
+        "Content-Type": "application/json"
+      }
+    });
+    if(!respond.ok)
+    {
+      throw new Error(`API request mangas with filter failed with status: ${respond.status}`);
+    }
+    const result = await respond.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error('Error fetching mangas:', error);
+    return [];
+  }
+}
+

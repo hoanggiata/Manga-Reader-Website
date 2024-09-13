@@ -16,7 +16,7 @@ export default async function ImageChapter({chapterID})
                 sizes="100vw"
                 width={0}
                 height={0}
-                style={{ width: '75%', height: 'auto' }}
+                style={{ width: '100%', height: 'auto' }}
               />
             </div>
           ))}
