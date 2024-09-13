@@ -229,7 +229,7 @@ export default async function DetailPage({params} : any) {
                                     <li key={manga.id} className="flex items-center border-b border-[#2f2f2f] py-4 mb-4">                            
                                         {coverArts[index].map(item => (
                                         <div key={manga.id} className="min-w-16 h-20 mr-6 block">
-                                            <Image className="w-full h-full" src={item} alt={manga.attributes.title.en} width={0} height={0} unoptimized/>
+                                            <Image className="w-full h-full" src={item} alt={manga.attributes.title.en} width={74} height={0}/>
                                         </div>
                                         ))}                                                                                                   
                                         <div className="flex flex-col">
