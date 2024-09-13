@@ -6,7 +6,7 @@ import Footer from "@/components/ui/Footer";
 import Loading from "@/app/loading";
 import { Suspense } from "react";
 import { Toaster, toast } from 'sonner'
-
+import { SpeedInsights } from '@vercel/speed-insights/next';
 const poppins = Poppins({ weight: ['400', '700'],
 style: ['normal', 'italic'],
 subsets: ['latin'],
@@ -29,6 +29,7 @@ export default function RootLayout({
           <Header />
         </Suspense>       
         {children}
+        <SpeedInsights />
         <Toaster richColors position="top-right"/>
         <Footer/>
       </body>
