@@ -79,7 +79,7 @@ export default function SearchPopUp()
                             {coverArts[index].map(cover => {
                             return (
                                 <div key={manga.id} className=" w-16">
-                                    <Image src={cover} className="w-full" alt="Logo Website" width={0} height={0} unoptimized/>
+                                    <Image src={cover} className="w-full" alt="Logo Website" width={52} height={0} unoptimized/>
                                 </div>
                             );
                             })}                             

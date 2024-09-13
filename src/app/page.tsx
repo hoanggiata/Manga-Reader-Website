@@ -46,7 +46,7 @@ export default async function Home() {
                 {coverArts[index].map(cover => {
                   return (
                   <Link key={manga.id} href="#" className="absolute top-4 left-4 md:w-[140px] w-[80px] md:h-[200px]" prefetch={true}>
-                    <Image className="w-full lg:h-full" src={cover} width={140} height={200} alt="Manga Cover" ></Image>
+                    <Image className="w-full lg:h-full" src={cover} width={140} height={0} alt="Manga Cover" ></Image>
                   </Link>
                   );
                 })}            
