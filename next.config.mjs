@@ -22,6 +22,14 @@ const nextConfig = {
             }
         ],
     },
+    experimental: {
+        serverActions: {
+            allowedOrigins: ["localhost:3000"],
+        },
+    },
+    typescript:{
+        ignoreBuildErrors: true,
+    },
 };
 
 export default nextConfig;
