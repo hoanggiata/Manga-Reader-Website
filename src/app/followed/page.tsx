@@ -11,6 +11,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 import { fetchFollowedMangasWithID, fetchManga, slideTitle } from "@/utils/utils";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import "@/app/globals.css"
 const fetchFollowedMangaID = async (email : String | null | undefined) => {
     try {
         let link = new URL(`${process.env.NEXTAUTH_URL}/api/getMangaFollowedId`);

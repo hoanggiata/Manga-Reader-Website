@@ -10,6 +10,7 @@ import {fetchAllTag, fetchManga, slideTitle} from "@/utils/utils";
 import Card from "@/components/ui/Card";
 import FilterSelection  from "@/components/ui/FilterSelection";
 import PaginationComponent from "@/components/PaginationComponent";
+import "@/app/globals.css"
 export default async function Filter({params, searchParams}:any) {
     let mangas, allChapters,coverArts,totalManga,includedTags;
     let filters: {[key:string]:any} = {

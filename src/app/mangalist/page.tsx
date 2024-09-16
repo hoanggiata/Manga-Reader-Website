@@ -11,6 +11,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 import { fetchManga, slideTitle } from "@/utils/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/authOptions";
+import "@/app/globals.css"
 export default async function MangaList({params, searchParams}:any) {
     const session = await getServerSession(authOptions);
     let mangas, allChapters,coverArts;

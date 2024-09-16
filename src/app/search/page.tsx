@@ -1,7 +1,7 @@
 import PaginationComponent from "@/components/PaginationComponent";
 import SearchMangaInput from "@/components/SearchMangaInput";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-
+import "@/app/globals.css"
 import Card from "@/components/ui/Card";
 
 import { fetchManga, slideTitle } from "@/utils/utils";

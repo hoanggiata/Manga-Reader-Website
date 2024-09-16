@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import { Suspense } from "react";
 import FollowButton from "@/components/DetailPage/FollowButton";
+import "@/app/globals.css"
 import { stat } from "fs";
 type Props = {
     params: {

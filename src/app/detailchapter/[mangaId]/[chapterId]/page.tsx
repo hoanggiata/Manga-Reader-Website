@@ -13,6 +13,7 @@ import SelectComponent from "@/components/SelectComponent";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import ScrollToTopButton from "@/components/DetailChapter/ScrollToTopButton/ScrollToTopButton";
+import "@/app/globals.css"
 type Props = {
     params: {
         mangaId: string;
