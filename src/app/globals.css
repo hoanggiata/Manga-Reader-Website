@@ -105,6 +105,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
 
 .highlight
 {

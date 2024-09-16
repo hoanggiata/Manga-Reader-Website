@@ -10,6 +10,7 @@ import {
 import {fetchManga,fetchMostViewed,slideTitle} from "@/utils/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/authOptions";
+import "@/app/globals.css"
 export default async function Home() {
   const {mangas,allChapters,coverArts} = await fetchManga();
   const {mangaMostView,coverArtsMostView,allChaptersMostView} = await fetchMostViewed();
