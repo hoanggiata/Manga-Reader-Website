@@ -18,7 +18,7 @@ export default function FollowButton({checkMangaFollowed,handleMangaFollowed,man
                 if(!checkFollowed)
                 {
                     const respond = await handleMangaFollowed(mangaId,email);
-                    if(respond){toast.success("Succeeded following manga")}
+                    if(respond){toast.success("This manga has been added to Favorite List.")}
                     else{toast.error("Failed to following manga")};
                     setClicked(false);
                     setFollowed(true);
@@ -26,7 +26,7 @@ export default function FollowButton({checkMangaFollowed,handleMangaFollowed,man
                 else
                 {
                     const respond = await handleMangaFollowed(mangaId,email);
-                    if(respond){toast.success("Succeeded cancelling following manga")}
+                    if(respond){toast.success("This manga has been removed from Favorite List.")}
                     else{toast.error("Failed to cancelling following manga")};
                     setClicked(false);
                     setFollowed(false);
