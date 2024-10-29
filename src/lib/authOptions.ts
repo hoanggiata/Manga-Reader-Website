@@ -4,6 +4,7 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider  from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 export const authOptions:NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -19,7 +20,7 @@ export const authOptions:NextAuthOptions = {
                 const {email,password} = credentials;
                 try {
                     await connectMongoDB();
-                    const user = await User.findOne({email,type:"credentials"});
+                    const user = await User.findOne({email});
                     if(!user)
                     {
                         return null;
@@ -76,21 +77,39 @@ export const authOptions:NextAuthOptions = {
         },
         async jwt({token,user})
         {
-            if(user){
+            if (user) {
                 token.user = user;
+                token.accessToken = jwt.sign({ user }, process.env.NEXTAUTH_SECRET, { expiresIn: '1h' });
+                token.refreshToken = jwt.sign({ user }, process.env.NEXTAUTH_SECRET, { expiresIn: '7d' });
             }
-            return token;
+
+            // Check if the access token has expired
+            if (Date.now() / 1000 > token.exp) {
+                try {
+                    const newAccessToken = jwt.sign({ user: token.user }, process.env.NEXTAUTH_SECRET, { expiresIn: '1h' });
+                    token.accessToken = newAccessToken;
+                } catch (error) {
+                    console.log("Error refreshing access token: ", error);
+                }
+            }
+
+            return token;;
         },
         async session({ session, token, user }) {
-            // Send properties to the client, like an access_token and user id from a provider.
-            // session.user.id = token.id
-            // session.user.name = token.name
             session.user = token.user;
+            session.accessToken = token.accessToken;
+            session.refreshToken = token.refreshToken;
+            await connectMongoDB();
+            const dbUser = await User.findOne({ email: session.user.email });
+            if (dbUser) {
+                session.user.name = dbUser.name; // Update session with the latest data
+            }
             return session;
         }
     },
     session: {
         strategy: "jwt",
+        maxAge: 60 * 60, // 1 hour
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages:{

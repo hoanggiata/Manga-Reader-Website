@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import Loading from "@/app/loading";
+import PrelineScript from "@/components/PrelineScript";
 import { Suspense } from "react";
 import { Toaster, toast } from 'sonner'
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -32,6 +33,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Toaster richColors position="top-right"/>
         <Footer/>
+        <PrelineScript/>
       </body>
     </html>
   );

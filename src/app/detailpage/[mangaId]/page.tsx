@@ -6,10 +6,8 @@ import { Metadata } from "next";
 import ChapterList from "@/components/ChapterList";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
-import { Suspense } from "react";
 import FollowButton from "@/components/DetailPage/FollowButton";
 import "@/app/globals.css"
-import { stat } from "fs";
 type Props = {
     params: {
         mangaId: string;
@@ -50,7 +48,6 @@ const handleMangaFollowed = async (mangaId: any,email: String) => {
     console.log(status);
     if(status === true)
         {
-            console.log("This is True function");
             try {
                 let link = new URL(`${process.env.NEXTAUTH_URL}/api/handleMangaFollowed`);
                 const respond = await fetch(link,{
@@ -78,7 +75,6 @@ const handleMangaFollowed = async (mangaId: any,email: String) => {
         }
         else if(status === false)
         {
-            console.log("This is False function");
             try {
                 let link = new URL(`${process.env.NEXTAUTH_URL}/api/handleMangaFollowed`);
                 const respond = await fetch(link,{
@@ -104,19 +100,6 @@ const handleMangaFollowed = async (mangaId: any,email: String) => {
                 console.log("Error: ",error);
             }            
         }
-    // try {
-    //     let link = new URL(`${process.env.NEXTAUTH_URL}/api/checkMangaFollowed`);
-    //     const respond = await fetch(link,{
-    //         method: "POST",
-    //         headers:{
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({mangaId,email}),
-    //     });
-        
-    // } catch (error) {
-    //     console.log("Error: ",error);
-    // }
 }
 const getChapterRead = async (mangaId: String,email: any) => {
     try {    
