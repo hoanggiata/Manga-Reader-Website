@@ -23,34 +23,26 @@ export default async function Header()
           </nav>  
         </div>
         
-        <div className="flex items-center relative ml-28">
-          
-          {/* <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-[153px]" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
-          <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
-          </svg> */}
-          
+        <div className="flex items-center relative ml-14 gap-5">        
           <SearchPopUp/>
-          <div className="group">
-            <Link href={!session?.user ? "/auth/sign-in" : "#"} className="text-[#FFD700] ml-10 font-bold text-base hidden lg:block min-w-max mt-1 ">{session?.user ? `Hi, ${session?.user?.name}` : "Sign In"}</Link>
+          <div className="group order-3">
+            <Link href={!session?.user ? "/auth/sign-in" : "#"} className="text-[#FFD700] lg:ml-10 font-bold text-base  block min-w-max mt-1 truncate ">{session?.user ? `${session?.user?.name}` : "Sign In"}</Link>
             <MemberPopup isLogin={session?.user ? true : false}/>
           </div>
           
-          <div className="lg:hidden flex items-center space-x-4 ml-3">
-            <Button className="w-[40px] h-[30px] text-xs text-[#000000] bg-[#FFD700] hover:bg-[#FFEC8B]" variant="default">
-              <Link href="/">Filter</Link>
-            </Button>
-            <button className="text-white focus:outline-none">
+          <div className="lg:hidden flex items-center space-x-4 ml-20">
+            <button className="text-white focus:outline-none ">
               <Link href="/search">
                 <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
                 </svg>
               </Link>
-            </button>
-            <button className="text-white focus:outline-none">
+            </button>           
+            {/* <button className="text-white focus:outline-none">
               <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" fillRule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clipRule="evenodd"/>
               </svg>
-            </button>
+            </button> */}
           </div>
         </div>  
         

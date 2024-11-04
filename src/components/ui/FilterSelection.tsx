@@ -108,11 +108,11 @@ export default function GenreSelection({ genres,filters,includedTags }) {
   return (
     <form className="text-white mb-[3rem]" onSubmit={(event) => event.preventDefault()}>
           {/* First Filter Section */}
-          <div className="flex">
-              <div className="flex text-sm p-[5px] pl-[12px] pr-[6px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center w-[183px]">
-                  <strong className="text-xs lg:text-sm">Content Rating</strong>
-                  <div className="relative group w-max">
-                      <select id="contentRating" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
+          <div className="flex flex-col lg:flex-row">
+              <div className="flex text-sm p-[5px] pl-[12px] pr-[6px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center w-[277px]">
+                  <strong className="text-xs lg:text-sm flex-1">Content Rating</strong>
+                  <div className="relative group w-max flex-[2]">
+                      <select id="contentRating" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer border-none">
                           <option className="min-h-[1.2em]" value={"any"} selected>Any</option>
                           <option className="min-h-[1.2em]" value={"safe"}>Safe</option>
                           <option className="min-h-[1.2em]" value={"suggestive"}>Suggestive</option>
@@ -120,10 +120,10 @@ export default function GenreSelection({ genres,filters,includedTags }) {
                       </select>
                   </div>
               </div>
-              <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center w-44">
-                  <strong className="text-xs lg:text-sm">Status</strong>
-                  <div className="relative group w-4">
-                      <select id="status" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
+              <div className="flex text-sm p-[5px] pl-[12px] pr-[12px] mr-[8px] mb-[15px] border rounded-[6px] border-gray-600 items-center w-[277px]">
+                  <strong className="text-xs lg:text-sm flex-1">Status</strong>
+                  <div className="relative group w-4 flex-[2]">
+                      <select id="status" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer border-none">
                           <option className="min-h-[1.2em]" value={"any"} selected>Any</option>
                           <option className="min-h-[1.2em]" value={"ongoing"}>Ongoing</option>
                           <option className="min-h-[1.2em]" value={"completed"}>Completed</option>
@@ -149,10 +149,10 @@ export default function GenreSelection({ genres,filters,includedTags }) {
                       </select>
                   </div>
               </div> */}
-              <div className="flex text-sm p-[5px] pl-[12px] pr-[6px] mb-[8px] border rounded-[6px] border-gray-600 items-center w-46">
-                  <strong className="text-xs lg:text-sm">Demographic</strong>
-                  <div className="relative group ">
-                      <select id="publicationDemographic" className="ml-2 bg-[#1f1f1f] outline-none hover:cursor-pointer">
+              <div className="flex text-sm p-[5px] pl-[12px] pr-[6px] mb-[8px] border rounded-[6px] border-gray-600 items-center w-[277px]">
+                  <strong className="text-xs lg:text-sm flex-1">Demographic</strong>
+                  <div className="relative group flex-[2]">
+                      <select id="publicationDemographic" className="ml-2 bg-[#1f1f1f] !focus:outline-none !focus:shadow-none hover:cursor-pointer border-none border-0 w-[83%]">
                           <option className="min-h-[1.2em]" value={"any"} selected>Any</option>
                           <option className="min-h-[1.2em]" value={"shounen"}>Shounen</option>
                           <option className="min-h-[1.2em]" value={"shoujo"}>Shoujo</option>
