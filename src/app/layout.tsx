@@ -29,7 +29,7 @@ export default function RootLayout({
         <Suspense fallback={<Loading />}>
           <Header />
         </Suspense>       
-        {children}
+        <Suspense fallback={<Loading />}> {children} </Suspense>
         <SpeedInsights />
         <Toaster richColors position="top-right"/>
         <Footer/>
