@@ -143,7 +143,7 @@ export default async function DetailPage({params} : any) {
                 <div className="container mx-auto px-4 lg:px-0 flex flex-wrap flex-col lg:flex-row w-full mb-10 mt-10">
                     <div className="w-full lg:w-1/2 lg:flex py-5 lg:py-0">
                         <div className="lg:min-w-[240px] lg:max-h-[340px] w-36 ml-auto mr-auto border-4 rounded-lg">
-                            <Image className="w-full lg:max-h-[340px] h-full rounded" src={coverArt} alt="Manga Title" width={200} height={300}/>
+                            <Image className="w-full lg:max-h-[340px] h-full rounded" loading="eager" src={coverArt} alt="Manga Title" width={200} height={300}/>
                         </div>
                         <div className="flex flex-col text-center lg:text-left lg:ml-10">
                             <h1 className="text-xl font-bold text-white mt-5">{slideTitle(manga,false)}</h1>
