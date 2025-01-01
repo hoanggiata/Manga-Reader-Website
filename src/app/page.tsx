@@ -27,9 +27,9 @@ export default async function Home() {
           loop: true,
         }}>
           <CarouselContent>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner1.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner2.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
-            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner3.jpg" width={1100} height={450} alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner1.jpg" width={1100} height={450} loading="eager" alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner2.jpg" width={1100} height={450} loading="eager" alt="Manga Cover"/></CarouselItem>
+            <CarouselItem><Image className="lg:w-[1200px] lg:h-[400px]" src="/images/banner3.jpg" width={1100} height={450} loading="eager" alt="Manga Cover"/></CarouselItem>
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
