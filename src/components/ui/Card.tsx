@@ -11,7 +11,7 @@ export default async function Card({cover="",tags,chapters=[],title,mangaID})
     return (
     <div key={mangaID} className="w-full md:w-[100%] lg:w-full rounded-[0.75rem] md:bg-[#2f2f2f] p-4 lg:ml-[7px] lg:mr-[7px] lg:mb-[20px] relative">       
         <Link key={mangaID} href="#" className="absolute top-4 left-4 lg:w-[140px] md:w-[140px] w-[80px] h-[120px] md:h-[200px]">
-            <Image className="w-full h-full" src={cover} width={140} height={0} alt={`${title}`} ></Image>
+            <Image className="w-full h-full" loading="eager" src={cover} width={140} height={0} alt={`${title}`} ></Image>
         </Link>     
         {/* Manga Detail */}
         <div className="float-right md:h-[200px] min-h-[120px] w-[calc(100%-95px)] md:w-[calc(100%-160px)] relative">
