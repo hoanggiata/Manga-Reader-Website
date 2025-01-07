@@ -26,10 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Suspense fallback={<Loading />}>
+        {/* <Suspense fallback={<Loading />}>
+        </Suspense>        */}
           <Header />
-        </Suspense>       
-        <Suspense fallback={<Loading />}> {children} </Suspense>
+        {/* <Suspense fallback={<Loading />}> </Suspense> */}
+        {children} 
         <SpeedInsights />
         <Toaster richColors position="top-right"/>
         <Footer/>
